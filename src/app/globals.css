@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-deep-void: #0A0A0F;
+  --color-neon-magenta: #FF00FF;
+  --color-hot-pink: #FF2D8B;
+  --color-ghost: #E8E5F0;
+  --color-charcoal: #12121A;
+  --color-subtle-cyan: rgba(0, 240, 255, 0.2);
+
+  --font-grotesk: var(--font-space-grotesk), sans-serif;
+  --font-serif: var(--font-instrument-serif), serif;
+  --font-mono: var(--font-fira-code), monospace;
+  --font-sans: var(--font-inter), sans-serif;
+  
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-4xl: 2.5rem;
+  --radius-5xl: 3rem;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-deep-void);
+    color: var(--color-ghost);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom selection color */
+  ::selection {
+    background: var(--color-neon-magenta);
+    color: white;
+  }
+}

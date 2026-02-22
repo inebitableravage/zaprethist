@@ -1,0 +1,212 @@
+"use client";
+
+import { useRef, useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
+const VIDEO_STATS = [
+    "2.7 млн",
+    "794.9 тыс.",
+    "2.5 млн",
+    "1.2 млн",
+    "863 тыс.",
+    "641 тыс."
+];
+
+// Local images for video thumbnails
+const VIDEO_THUMBNAILS = [
+    "/images/thumb-1.jpg.jpg",
+    "/images/thumb-2.jpg.jpg",
+    "/images/thumb-3.jpg.jpg",
+    "/images/thumb-4.jpg.jpg",
+    "/images/thumb-5.jpg.jpg",
+    "/images/thumb-6.jpg.jpg"
+];
+
+export default function SocialProof() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const countersRef = useRef<HTMLDivElement>(null);
+    const cardsRef = useRef<HTMLDivElement>(null);
+
+    const [tiktokCount, setTiktokCount] = useState(0);
+    const [instaCount, setInstaCount] = useState(0);
+
+    useGSAP(() => {
+        // Number counter animation
+        ScrollTrigger.create({
+            trigger: countersRef.current,
+            start: "top 80%",
+            onEnter: () => {
+                gsap.to({ val: 0 }, {
+                    val: 847,
+                    duration: 2,
+                    ease: "power2.out",
+                    onUpdate: function () {
+                        setTiktokCount(Math.floor(this.targets()[0].val));
+                    }
+                });
+
+                gsap.to({ val: 0 }, {
+                    val: 439,
+                    duration: 2,
+                    ease: "power2.out",
+                    onUpdate: function () {
+                        setInstaCount(Math.floor(this.targets()[0].val));
+                    }
+                });
+            },
+            once: true
+        });
+
+        // Cards stagger animation
+        if (cardsRef.current) {
+            gsap.from(cardsRef.current.children, {
+                scrollTrigger: {
+                    trigger: cardsRef.current,
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        }
+
+        // Bottom text fade up
+        gsap.from(".proof-text", {
+            scrollTrigger: {
+                trigger: ".proof-text",
+                start: "top 85%",
+            },
+            y: 30,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 1,
+            ease: "power2.out"
+        });
+
+    }, { scope: containerRef });
+
+    return (
+        <section
+            id="results"
+            ref={containerRef}
+            className="relative py-24 lg:py-32 w-full bg-deep-void overflow-hidden"
+        >
+            {/* Midjourney Background */}
+            <div className="absolute inset-0 z-0">
+                <div
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35"
+                    style={{ backgroundImage: "url('/images/Inevitable_Close_up_of_a_mysterious_face_with_glowing_cyan_eyes_65756e16-d5c4-4dcc-ab75-c1d76bc257ae.png')" }}
+                />
+                {/* Top and bottom fade to deep-void */}
+                <div className="absolute inset-0 bg-gradient-to-b from-deep-void via-transparent to-deep-void" />
+                {/* Subtle left/right fade */}
+                <div className="absolute inset-0 bg-gradient-to-r from-deep-void/60 via-transparent to-deep-void/60" />
+            </div>
+            {/* Subtle grid background */}
+            <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none z-[1]"
+                style={{ backgroundImage: "linear-gradient(to right, #808080 1px, transparent 1px), linear-gradient(to bottom, #808080 1px, transparent 1px)", backgroundSize: "4rem 4rem" }}
+            />
+
+            <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+
+                {/* Stats Row */}
+                <div ref={countersRef} className="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32 mb-20 text-center">
+                    <div className="flex flex-col items-center group">
+                        <div className="flex items-center gap-3 mb-2 opacity-60">
+                            {/* Simple TikTok SVG Icon */}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+                            <span className="font-mono text-sm tracking-widest uppercase">TikTok</span>
+                        </div>
+                        <h3 className="font-mono text-7xl md:text-8xl lg:text-[8rem] font-bold text-neon-magenta" style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.2)" }}>
+                            {tiktokCount}K
+                        </h3>
+                        <p className="font-sans text-ghost/50 mt-4 text-sm uppercase tracking-widest">
+                            среднее кол-во просмотров
+                        </p>
+                    </div>
+
+                    <div className="hidden md:block w-px h-32 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+
+                    <div className="flex flex-col items-center group">
+                        <div className="flex items-center gap-3 mb-2 opacity-60">
+                            {/* Simple Instagram SVG Icon */}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 .25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" /></svg>
+                            <span className="font-mono text-sm tracking-widest uppercase">Instagram</span>
+                        </div>
+                        <h3 className="font-mono text-7xl md:text-8xl lg:text-[8rem] font-bold text-neon-magenta" style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.2)" }}>
+                            {instaCount}K
+                        </h3>
+                        <p className="font-sans text-ghost/50 mt-4 text-sm uppercase tracking-widest">
+                            среднее кол-во просмотров
+                        </p>
+                    </div>
+                </div>
+
+                {/* 6 Mini Video Cards split by platform */}
+                <div ref={cardsRef} className="flex flex-col gap-12 mb-24">
+                    {/* TikTok row */}
+                    <div className="flex flex-col">
+                        <div className="flex items-center gap-2 mb-4">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-ghost/40"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+                            <span className="font-mono text-xs tracking-widest uppercase text-ghost/40">TikTok</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                            {[0, 1, 2].map(i => (
+                                <div key={i} className="group flex flex-col items-center">
+                                    <div className="w-full rounded-2xl border border-white/5 overflow-hidden mb-3 relative group-hover:border-neon-magenta/50 transition-colors duration-500 shadow-xl">
+                                        <img className="w-full h-auto block transition-transform duration-500 group-hover:scale-105" src={VIDEO_THUMBNAILS[i]} alt={VIDEO_STATS[i]} />
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-2 h-2 rounded-full bg-neon-magenta animate-pulse shadow-[0_0_8px_#FF00FF]" />
+                                        <span className="font-mono text-sm font-bold text-ghost">{VIDEO_STATS[i]}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Instagram row */}
+                    <div className="flex flex-col">
+                        <div className="flex items-center gap-2 mb-4">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-ghost/40"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 .25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" /></svg>
+                            <span className="font-mono text-xs tracking-widest uppercase text-ghost/40">Instagram</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                            {[3, 4, 5].map(i => (
+                                <div key={i} className="group flex flex-col items-center">
+                                    <div className="w-full rounded-2xl border border-white/5 overflow-hidden mb-3 relative group-hover:border-neon-magenta/50 transition-colors duration-500 shadow-xl">
+                                        <img className="w-full h-auto block transition-transform duration-500 group-hover:scale-105" src={VIDEO_THUMBNAILS[i]} alt={VIDEO_STATS[i]} />
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-2 h-2 rounded-full bg-neon-magenta animate-pulse shadow-[0_0_8px_#FF00FF]" />
+                                        <span className="font-mono text-sm font-bold text-ghost">{VIDEO_STATS[i]}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Conclusion Text */}
+                <div className="text-center flex flex-col gap-2">
+                    <p className="proof-text font-serif italic text-3xl md:text-5xl text-neon-magenta mb-2" style={{ textShadow: "0 0 20px rgba(255,0,255,0.3)" }}>
+                        Это не удача.
+                    </p>
+                    <h2 className="proof-text font-grotesk font-bold text-5xl md:text-7xl lg:text-8xl tracking-tight text-white">
+                        Это система.
+                    </h2>
+                </div>
+
+            </div>
+        </section>
+    );
+}
