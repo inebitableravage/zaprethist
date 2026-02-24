@@ -183,7 +183,7 @@ export default function SocialProof() {
                             среднее кол-во просмотров
                         </p>
                         {/* TikTok evidence */}
-                        <div className="evidence-card mt-8 w-[220px] rounded-2xl overflow-hidden border border-white/10 opacity-70 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="evidence-card mt-8 w-[220px] rounded-2xl overflow-hidden border border-white/10 opacity-100 transition-opacity duration-500">
                             <img src="/images/tiktok.png" alt="TikTok Analytics" className="w-full h-auto block" />
                         </div>
                     </a>
@@ -203,7 +203,7 @@ export default function SocialProof() {
                             среднее кол-во просмотров
                         </p>
                         {/* Instagram evidence */}
-                        <div className="evidence-card mt-8 w-[220px] rounded-2xl overflow-hidden border border-white/10 opacity-70 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="evidence-card mt-8 w-[220px] rounded-2xl overflow-hidden border border-white/10 opacity-100 transition-opacity duration-500">
                             <img src="/images/instagram.png" alt="Instagram Analytics" className="w-full h-auto block" />
                         </div>
                     </a>
