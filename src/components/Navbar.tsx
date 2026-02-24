@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "deep-void"; // dummy, will use proper import below
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 
@@ -29,8 +28,8 @@ export default function Navbar() {
         <header
             ref={navRef}
             className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-full transition-all duration-300 ${isScrolled
-                    ? "bg-deep-void/70 backdrop-blur-xl border-b border-neon-magenta/30 py-3 shadow-[0_0_20px_rgba(255,0,255,0.05)]"
-                    : "bg-transparent py-5"
+                ? "bg-deep-void/70 backdrop-blur-xl border-b border-neon-magenta/30 py-3 shadow-[0_0_20px_rgba(255,0,255,0.05)]"
+                : "bg-transparent py-5"
                 }`}
         >
             <div className="flex items-center justify-between px-6 lg:px-10">

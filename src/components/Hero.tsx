@@ -29,12 +29,12 @@ export default function Hero() {
     return (
         <section
             ref={containerRef}
-            className="relative z-10 w-full h-[100dvh] flex items-end pb-[10vh] overflow-hidden bg-deep-void"
+            className="relative z-10 w-full h-[100dvh] flex items-end pb-[10vh] overflow-hidden bg-deep-void break-words"
         >
             {/* Background Image / Texture */}
             <div className="absolute inset-0 z-0">
                 <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
                     style={{
                         backgroundImage: "url('/images/hero-bg.jpg.png')"
                     }}
@@ -44,14 +44,14 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-r from-deep-void via-deep-void/60 to-transparent w-[80%]" />
             </div>
 
-            <div className="relative z-10 w-full px-6 lg:px-20 max-w-7xl mx-auto flex flex-col items-start justify-end h-full">
-                <div ref={textRef} className="max-w-3xl flex flex-col items-start gap-4">
-                    <h1 className="font-grotesk font-bold text-4xl md:text-5xl lg:text-7xl leading-tight">
+            <div className="relative z-10 w-full px-4 sm:px-6 lg:px-20 max-w-7xl mx-auto flex flex-col items-start justify-end h-full">
+                <div ref={textRef} className="max-w-3xl flex flex-col items-start gap-0">
+                    <h1 className="font-grotesk font-bold text-4xl md:text-5xl lg:text-7xl leading-none">
                         Создавай ИИ-анимацию
                     </h1>
                     <h2
-                        className="font-serif italic text-6xl md:text-7xl lg:text-9xl tracking-tight text-white mb-2"
-                        style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.4)" }}
+                        className="font-serif italic text-[11vw] md:text-7xl lg:text-9xl tracking-tight text-white mb-6"
+                        style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.4)", lineHeight: "1" }}
                     >
                         на миллионы просмотров.
                     </h2>

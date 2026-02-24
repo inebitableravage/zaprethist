@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Instrument_Serif, Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin", "cyrillic"], variable: "--font-space-grotesk" });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk" });
 const instrumentSerif = Instrument_Serif({ weight: ["400"], style: ["italic"], subsets: ["latin"], variable: "--font-instrument-serif" });
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 const firaCode = Fira_Code({ subsets: ["latin", "cyrillic"], variable: "--font-fira-code" });

@@ -102,7 +102,7 @@ export default function SocialProof() {
             {/* Midjourney Background */}
             <div className="absolute inset-0 z-0">
                 <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-35"
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
                     style={{ backgroundImage: "url('/images/Inevitable_Close_up_of_a_mysterious_face_with_glowing_cyan_eyes_65756e16-d5c4-4dcc-ab75-c1d76bc257ae.png')" }}
                 />
                 {/* Top and bottom fade to deep-void */}
@@ -120,11 +120,10 @@ export default function SocialProof() {
 
                 {/* Stats Row */}
                 <div ref={countersRef} className="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32 mb-20 text-center">
-                    <div className="flex flex-col items-center group">
-                        <div className="flex items-center gap-3 mb-2 opacity-60">
-                            {/* Simple TikTok SVG Icon */}
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
-                            <span className="font-mono text-sm tracking-widest uppercase">TikTok</span>
+                    <a href="https://www.tiktok.com/@zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group hover:-translate-y-1 transition-transform">
+                        <div className="flex items-center gap-6 mb-6 text-white text-shadow-glow group-hover:text-neon-magenta transition-colors">
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+                            <span className="font-mono text-3xl tracking-widest uppercase">TikTok</span>
                         </div>
                         <h3 className="font-mono text-7xl md:text-8xl lg:text-[8rem] font-bold text-neon-magenta" style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.2)" }}>
                             {tiktokCount}K
@@ -132,15 +131,14 @@ export default function SocialProof() {
                         <p className="font-sans text-ghost/50 mt-4 text-sm uppercase tracking-widest">
                             среднее кол-во просмотров
                         </p>
-                    </div>
+                    </a>
 
                     <div className="hidden md:block w-px h-32 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
 
-                    <div className="flex flex-col items-center group">
-                        <div className="flex items-center gap-3 mb-2 opacity-60">
-                            {/* Simple Instagram SVG Icon */}
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 .25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" /></svg>
-                            <span className="font-mono text-sm tracking-widest uppercase">Instagram</span>
+                    <a href="https://www.instagram.com/zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group hover:-translate-y-1 transition-transform">
+                        <div className="flex items-center gap-6 mb-6 text-white text-shadow-glow group-hover:text-neon-magenta transition-colors">
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 .25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" /></svg>
+                            <span className="font-mono text-3xl tracking-widest uppercase">Instagram</span>
                         </div>
                         <h3 className="font-mono text-7xl md:text-8xl lg:text-[8rem] font-bold text-neon-magenta" style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.2)" }}>
                             {instaCount}K
@@ -148,26 +146,22 @@ export default function SocialProof() {
                         <p className="font-sans text-ghost/50 mt-4 text-sm uppercase tracking-widest">
                             среднее кол-во просмотров
                         </p>
-                    </div>
+                    </a>
                 </div>
 
                 {/* 6 Mini Video Cards split by platform */}
                 <div ref={cardsRef} className="flex flex-col gap-12 mb-24">
                     {/* TikTok row */}
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-4">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-ghost/40"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
-                            <span className="font-mono text-xs tracking-widest uppercase text-ghost/40">TikTok</span>
-                        </div>
+                        <a href="https://www.tiktok.com/@zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 mb-8 group w-fit">
+                            <svg width="42" height="42" viewBox="0 0 24 24" fill="currentColor" className="text-white group-hover:text-neon-magenta transition-colors"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+                            <span className="font-mono text-2xl tracking-widest uppercase text-white group-hover:text-neon-magenta transition-colors">TikTok</span>
+                        </a>
                         <div className="grid grid-cols-3 gap-4">
                             {[0, 1, 2].map(i => (
                                 <div key={i} className="group flex flex-col items-center">
-                                    <div className="w-full rounded-2xl border border-white/5 overflow-hidden mb-3 relative group-hover:border-neon-magenta/50 transition-colors duration-500 shadow-xl">
+                                    <div className="w-full rounded-2xl border border-white/5 overflow-hidden relative group-hover:border-neon-magenta/50 transition-colors duration-500 shadow-xl">
                                         <img className="w-full h-auto block transition-transform duration-500 group-hover:scale-105" src={VIDEO_THUMBNAILS[i]} alt={VIDEO_STATS[i]} />
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <span className="w-2 h-2 rounded-full bg-neon-magenta animate-pulse shadow-[0_0_8px_#FF00FF]" />
-                                        <span className="font-mono text-sm font-bold text-ghost">{VIDEO_STATS[i]}</span>
                                     </div>
                                 </div>
                             ))}
@@ -176,19 +170,15 @@ export default function SocialProof() {
 
                     {/* Instagram row */}
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-4">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-ghost/40"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 .25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" /></svg>
-                            <span className="font-mono text-xs tracking-widest uppercase text-ghost/40">Instagram</span>
-                        </div>
+                        <a href="https://www.instagram.com/zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 mb-8 group w-fit">
+                            <svg width="42" height="42" viewBox="0 0 24 24" fill="currentColor" className="text-white group-hover:text-neon-magenta transition-colors"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 .25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" /></svg>
+                            <span className="font-mono text-2xl tracking-widest uppercase text-white group-hover:text-neon-magenta transition-colors">Instagram</span>
+                        </a>
                         <div className="grid grid-cols-3 gap-4">
                             {[3, 4, 5].map(i => (
                                 <div key={i} className="group flex flex-col items-center">
-                                    <div className="w-full rounded-2xl border border-white/5 overflow-hidden mb-3 relative group-hover:border-neon-magenta/50 transition-colors duration-500 shadow-xl">
+                                    <div className="w-full rounded-2xl border border-white/5 overflow-hidden relative group-hover:border-neon-magenta/50 transition-colors duration-500 shadow-xl">
                                         <img className="w-full h-auto block transition-transform duration-500 group-hover:scale-105" src={VIDEO_THUMBNAILS[i]} alt={VIDEO_STATS[i]} />
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <span className="w-2 h-2 rounded-full bg-neon-magenta animate-pulse shadow-[0_0_8px_#FF00FF]" />
-                                        <span className="font-mono text-sm font-bold text-ghost">{VIDEO_STATS[i]}</span>
                                     </div>
                                 </div>
                             ))}

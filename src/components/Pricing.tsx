@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
 const TIER_1_FEATURES = [
     "Полный список сервисов с моими настройками",
     "Коллекция авторских стилей для генерации",
-    "Пошаговый процесс от сценария до готового ролика",
+    "Пошаговый процесс: визуал, анимация, озвучка, монтаж",
     "Создание уникального голоса и профессиональный саунд-дизайн",
     "Видеоуроки: весь рабочий процесс на экране",
     "Доступ в закрытый чат учеников"
@@ -64,7 +64,7 @@ export default function Pricing() {
             {/* Midjourney Background */}
             <div className="absolute inset-0 z-0">
                 <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
                     style={{ backgroundImage: "url('/images/Inevitable_An_ancient_city_under_a_dark_stormy_sky_a_massive_gl_e390684a-c3ef-4b1f-a1f3-85f049ffb98c.png')" }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-deep-void via-deep-void/50 to-deep-void" />
@@ -82,12 +82,12 @@ export default function Pricing() {
                 <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
 
                     {/* Card 1: Базовый */}
-                    <div className="bg-charcoal rounded-[2.5rem] p-8 md:p-12 border border-white/5 flex flex-col h-full hover:border-white/10 transition-colors">
+                    <div className="bg-charcoal rounded-[2.5rem] p-8 md:p-12 border border-white/15 flex flex-col h-full hover:border-white/20 transition-colors">
                         <h3 className="font-grotesk font-bold text-2xl text-ghost/80 mb-4">
                             Базовый
                         </h3>
                         <div className="font-mono text-5xl lg:text-6xl font-bold text-white mb-8">
-                            3 990 ₽
+                            3&thinsp;990&nbsp;₽
                         </div>
 
                         <ul className="flex flex-col gap-4 mb-12 flex-1">
@@ -99,9 +99,14 @@ export default function Pricing() {
                             ))}
                         </ul>
 
-                        <button className="w-full py-5 rounded-full border-2 border-neon-magenta/50 font-bold text-lg text-white hover:bg-neon-magenta/10 hover:border-neon-magenta transition-all active:scale-95">
+                        <a
+                            href="https://t.me/inevitable_ravage"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full py-5 rounded-full border-2 border-neon-magenta/50 font-bold text-lg text-white hover:bg-neon-magenta/10 hover:border-neon-magenta transition-all active:scale-95 text-center"
+                        >
                             Получить доступ
-                        </button>
+                        </a>
                     </div>
 
                     {/* Card 2: Персональное обучение (HIGHLIGHTED) */}
@@ -117,7 +122,7 @@ export default function Pricing() {
                             Персональное обучение
                         </h3>
                         <div className="relative z-10 font-mono text-5xl lg:text-7xl font-bold text-neon-magenta mb-8" style={{ textShadow: "0 0 30px rgba(255,0,255,0.3)" }}>
-                            6 990 ₽
+                            6&thinsp;990&nbsp;₽
                         </div>
 
                         <ul className="relative z-10 flex flex-col gap-5 mb-12 flex-1">
@@ -129,9 +134,14 @@ export default function Pricing() {
                             ))}
                         </ul>
 
-                        <button className="relative z-10 w-full py-5 rounded-full bg-neon-magenta font-bold text-lg text-deep-void hover:bg-hot-pink transition-colors hover:shadow-[0_0_30px_rgba(255,0,255,0.5)] active:scale-95 duration-300">
+                        <a
+                            href="https://t.me/inevitable_ravage"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="relative z-10 w-full py-5 rounded-full bg-neon-magenta font-bold text-lg text-deep-void hover:bg-hot-pink transition-colors hover:shadow-[0_0_30px_rgba(255,0,255,0.5)] active:scale-95 duration-300 text-center"
+                        >
                             Получить доступ
-                        </button>
+                        </a>
                     </div>
 
                 </div>

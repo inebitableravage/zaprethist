@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 const FAQ_ITEMS = [
     {
         q: "Нужен ли мощный компьютер?",
-        a: "Нет. Все сервисы работают в браузере. Достаточно стабильного интернета, можно работать даже с ноутбука."
+        a: "Нет. Все сервисы работают в браузере. Достаточно стабильного интернета, можно работать даже с телефона."
     },
     {
         q: "Сколько стоят инструменты?",
@@ -48,8 +48,8 @@ export default function Faq() {
                             <div
                                 key={i}
                                 className={`group border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen
-                                        ? "border-neon-magenta shadow-[0_0_20px_rgba(255,0,255,0.1)] bg-charcoal"
-                                        : "border-white/10 hover:border-white/20 bg-deep-void"
+                                    ? "border-neon-magenta shadow-[0_0_20px_rgba(255,0,255,0.1)] bg-charcoal"
+                                    : "border-white/10 hover:border-white/20 bg-deep-void"
                                     }`}
                             >
                                 <button
