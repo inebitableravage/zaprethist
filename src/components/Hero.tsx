@@ -31,14 +31,18 @@ export default function Hero() {
             ref={containerRef}
             className="relative z-10 w-full h-[100dvh] flex items-end pb-[10vh] overflow-hidden bg-deep-void break-words"
         >
-            {/* Background Image / Texture */}
+            {/* Background Video */}
             <div className="absolute inset-0 z-0">
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
-                    style={{
-                        backgroundImage: "url('/images/hero-bg.jpg.png')"
-                    }}
+                <video
+                    src="/videos/showreel.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
                 />
+                {/* Overlay to ensure text readability */}
+                <div className="absolute inset-0 bg-black/60" />
                 {/* Gradients to focus content bottom-left */}
                 <div className="absolute inset-0 bg-gradient-to-t from-deep-void via-deep-void/60 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-r from-deep-void via-deep-void/60 to-transparent w-[80%]" />
