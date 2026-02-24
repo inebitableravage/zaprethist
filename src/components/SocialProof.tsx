@@ -135,7 +135,7 @@ export default function SocialProof() {
                 <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-0 mb-16 border-b border-white/5 pb-20">
                     <div className="flex flex-col items-center px-12">
                         <h4 className="font-mono text-5xl md:text-7xl font-bold text-neon-magenta mb-4" style={{ textShadow: "0 0 30px rgba(255, 0, 255, 0.2)" }}>
-                            11.5М
+                            12М
                         </h4>
                         <p className="font-sans text-ghost/50 text-xs uppercase tracking-widest text-center">
                             просмотров за первый месяц
