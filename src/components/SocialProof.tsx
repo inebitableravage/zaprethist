@@ -157,7 +157,7 @@ export default function SocialProof() {
 
                     <div className="flex flex-col items-center px-12">
                         <h4 className="font-mono text-5xl md:text-7xl font-bold text-neon-magenta mb-4" style={{ textShadow: "0 0 30px rgba(255, 0, 255, 0.2)" }}>
-                            10
+                            9
                         </h4>
                         <p className="font-sans text-ghost/50 text-xs uppercase tracking-widest text-center">
                             видео
