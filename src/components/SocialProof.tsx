@@ -132,7 +132,7 @@ export default function SocialProof() {
             <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
 
                 {/* Summary Metrics Row */}
-                <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-0 mb-32 border-b border-white/5 pb-20">
+                <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-0 mb-16 border-b border-white/5 pb-20">
                     <div className="flex flex-col items-center px-12">
                         <h4 className="font-mono text-5xl md:text-7xl font-bold text-neon-magenta mb-4" style={{ textShadow: "0 0 30px rgba(255, 0, 255, 0.2)" }}>
                             11.5М
@@ -165,36 +165,8 @@ export default function SocialProof() {
                     </div>
                 </div>
 
-                {/* Evidence Gallery */}
-                <div className="evidence-gallery flex flex-col md:flex-row gap-8 mb-32">
-                    <div className="evidence-card flex-1 group">
-                        <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-neon-magenta/30 group-hover:shadow-[0_0_50px_rgba(255,0,255,0.1)]">
-                            <div className="absolute inset-0 bg-gradient-to-t from-deep-void/60 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            <img
-                                src="/images/instagram.png"
-                                alt="Instagram Analytics"
-                                className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.02]"
-                            />
-                        </div>
-                        <p className="mt-4 text-center font-mono text-xs uppercase tracking-[0.2em] text-ghost/40 group-hover:text-neon-magenta/60 transition-colors">
-                            Instagram Reach Evidence
-                        </p>
-                    </div>
 
-                    <div className="evidence-card flex-1 group">
-                        <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-neon-magenta/30 group-hover:shadow-[0_0_50px_rgba(255,0,255,0.1)]">
-                            <div className="absolute inset-0 bg-gradient-to-t from-deep-void/60 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            <img
-                                src="/images/tiktok.png"
-                                alt="TikTok Analytics"
-                                className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.02]"
-                            />
-                        </div>
-                        <p className="mt-4 text-center font-mono text-xs uppercase tracking-[0.2em] text-ghost/40 group-hover:text-neon-magenta/60 transition-colors">
-                            TikTok Growth Metrics
-                        </p>
-                    </div>
-                </div>
+
 
                 {/* Stats Row */}
                 <div ref={countersRef} className="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32 mb-20 text-center">
@@ -225,6 +197,29 @@ export default function SocialProof() {
                             среднее кол-во просмотров
                         </p>
                     </a>
+                </div>
+
+                {/* Evidence Gallery (Phone style) */}
+                <div className="evidence-gallery flex flex-row justify-center gap-6 mb-24">
+                    <div className="evidence-card max-w-[200px] flex-1">
+                        <div className="rounded-2xl overflow-hidden border border-neon-magenta/20 shadow-[0_0_16px_rgba(255,0,255,0.1)]">
+                            <img
+                                src="/images/instagram.png"
+                                alt="Instagram Analytics"
+                                className="w-full h-auto block"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="evidence-card max-w-[200px] flex-1">
+                        <div className="rounded-2xl overflow-hidden border border-neon-magenta/20 shadow-[0_0_16px_rgba(255,0,255,0.1)]">
+                            <img
+                                src="/images/tiktok.png"
+                                alt="TikTok Analytics"
+                                className="w-full h-auto block"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 {/* 6 Mini Video Cards split by platform */}
