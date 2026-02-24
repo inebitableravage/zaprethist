@@ -1,13 +1,38 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 
+const SHOWREEL_VIDEOS = [
+    "/images/video1.mp4",
+    "/images/video2.mp4",
+    "/images/video3.mp4"
+];
+
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
+    const [activeVideo, setActiveVideo] = useState(0);
+
+    // Handle video playback
+    useEffect(() => {
+        SHOWREEL_VIDEOS.forEach((_, idx) => {
+            const video = document.getElementById(`hero-video-${idx}`) as HTMLVideoElement;
+            if (video) {
+                if (idx === activeVideo) {
+                    video.currentTime = 0;
+                    video.play().catch(e => console.log("Video play locked:", e));
+                } else {
+                    // Slight delay before pausing to allow the crossfade transition to complete smoothly
+                    setTimeout(() => {
+                        video.pause();
+                    }, 1000);
+                }
+            }
+        });
+    }, [activeVideo]);
 
     useGSAP(
         () => {
@@ -31,21 +56,26 @@ export default function Hero() {
             ref={containerRef}
             className="relative z-10 w-full h-[100dvh] flex items-end pb-[10vh] overflow-hidden bg-deep-void break-words"
         >
-            {/* Background Video */}
-            <div className="absolute inset-0 z-0">
-                <video
-                    src="/videos/showreel.mp4"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
-                />
+            {/* Background Videos Sequencer */}
+            <div className="absolute inset-0 z-0 bg-black">
+                {SHOWREEL_VIDEOS.map((src, idx) => (
+                    <video
+                        key={src}
+                        id={`hero-video-${idx}`}
+                        src={src}
+                        muted
+                        playsInline
+                        onEnded={() => setActiveVideo((prev) => (prev + 1) % SHOWREEL_VIDEOS.length)}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${idx === activeVideo ? "opacity-100 z-10" : "opacity-0 z-0"
+                            }`}
+                    />
+                ))}
+
                 {/* Overlay to ensure text readability */}
-                <div className="absolute inset-0 bg-black/60" />
+                <div className="absolute inset-0 bg-black/60 z-20" />
                 {/* Gradients to focus content bottom-left */}
-                <div className="absolute inset-0 bg-gradient-to-t from-deep-void via-deep-void/60 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-deep-void via-deep-void/60 to-transparent w-[80%]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-deep-void via-deep-void/60 to-transparent z-20" />
+                <div className="absolute inset-0 bg-gradient-to-r from-deep-void via-deep-void/60 to-transparent w-[80%] z-20" />
             </div>
 
             <div className="relative z-10 w-full px-4 sm:px-6 lg:px-20 max-w-7xl mx-auto flex flex-col items-start justify-end h-full">
