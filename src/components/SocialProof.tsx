@@ -78,6 +78,19 @@ export default function SocialProof() {
             });
         }
 
+        // Evidence gallery fade up
+        gsap.from(".evidence-card", {
+            scrollTrigger: {
+                trigger: ".evidence-gallery",
+                start: "top 80%",
+            },
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 1,
+            ease: "power3.out"
+        });
+
         // Bottom text fade up
         gsap.from(".proof-text", {
             scrollTrigger: {
@@ -148,6 +161,37 @@ export default function SocialProof() {
                         </h4>
                         <p className="font-sans text-ghost/50 text-xs uppercase tracking-widest text-center">
                             видео
+                        </p>
+                    </div>
+                </div>
+
+                {/* Evidence Gallery */}
+                <div className="evidence-gallery flex flex-col md:flex-row gap-8 mb-32">
+                    <div className="evidence-card flex-1 group">
+                        <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-neon-magenta/30 group-hover:shadow-[0_0_50px_rgba(255,0,255,0.1)]">
+                            <div className="absolute inset-0 bg-gradient-to-t from-deep-void/60 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <img
+                                src="/images/instagram.png"
+                                alt="Instagram Analytics"
+                                className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.02]"
+                            />
+                        </div>
+                        <p className="mt-4 text-center font-mono text-xs uppercase tracking-[0.2em] text-ghost/40 group-hover:text-neon-magenta/60 transition-colors">
+                            Instagram Reach Evidence
+                        </p>
+                    </div>
+
+                    <div className="evidence-card flex-1 group">
+                        <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-neon-magenta/30 group-hover:shadow-[0_0_50px_rgba(255,0,255,0.1)]">
+                            <div className="absolute inset-0 bg-gradient-to-t from-deep-void/60 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <img
+                                src="/images/tiktok.png"
+                                alt="TikTok Analytics"
+                                className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.02]"
+                            />
+                        </div>
+                        <p className="mt-4 text-center font-mono text-xs uppercase tracking-[0.2em] text-ghost/40 group-hover:text-neon-magenta/60 transition-colors">
+                            TikTok Growth Metrics
                         </p>
                     </div>
                 </div>
