@@ -118,6 +118,40 @@ export default function SocialProof() {
 
             <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
 
+                {/* Summary Metrics Row */}
+                <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-0 mb-32 border-b border-white/5 pb-20">
+                    <div className="flex flex-col items-center px-12">
+                        <h4 className="font-mono text-5xl md:text-7xl font-bold text-neon-magenta mb-4" style={{ textShadow: "0 0 30px rgba(255, 0, 255, 0.2)" }}>
+                            11.5М
+                        </h4>
+                        <p className="font-sans text-ghost/50 text-xs uppercase tracking-widest text-center">
+                            просмотров за первый месяц
+                        </p>
+                    </div>
+
+                    <div className="hidden md:block w-px h-24 bg-[rgba(255,0,255,0.3)]" />
+
+                    <div className="flex flex-col items-center px-12">
+                        <h4 className="font-mono text-5xl md:text-7xl font-bold text-neon-magenta mb-4" style={{ textShadow: "0 0 30px rgba(255, 0, 255, 0.2)" }}>
+                            55К
+                        </h4>
+                        <p className="font-sans text-ghost/50 text-xs uppercase tracking-widest text-center">
+                            подписчиков суммарно
+                        </p>
+                    </div>
+
+                    <div className="hidden md:block w-px h-24 bg-[rgba(255,0,255,0.3)]" />
+
+                    <div className="flex flex-col items-center px-12">
+                        <h4 className="font-mono text-5xl md:text-7xl font-bold text-neon-magenta mb-4" style={{ textShadow: "0 0 30px rgba(255, 0, 255, 0.2)" }}>
+                            10
+                        </h4>
+                        <p className="font-sans text-ghost/50 text-xs uppercase tracking-widest text-center">
+                            видео
+                        </p>
+                    </div>
+                </div>
+
                 {/* Stats Row */}
                 <div ref={countersRef} className="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32 mb-20 text-center">
                     <a href="https://www.tiktok.com/@zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group hover:-translate-y-1 transition-transform">
