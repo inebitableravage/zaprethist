@@ -168,45 +168,52 @@ export default function SocialProof() {
 
 
 
-                {/* Evidence Gallery — full-size side-by-side */}
-                <div className="evidence-gallery grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
-                    <div className="evidence-card overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-[#0d0d0d]">
-                        <img src="/images/instagram.png" alt="Instagram Analytics" className="w-full h-auto block" />
-                    </div>
-                    <div className="evidence-card overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-[#0d0d0d]">
-                        <img src="/images/tiktok.png" alt="TikTok Analytics" className="w-full h-auto block" />
-                    </div>
-                </div>
+                {/* Stats Row & Evidence Columns */}
+                <div ref={countersRef} className="flex flex-col md:flex-row justify-center items-start gap-12 md:gap-16 mb-24 text-center">
 
-                {/* Stats Row */}
-                <div ref={countersRef} className="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32 mb-24 text-center">
-                    <a href="https://www.tiktok.com/@zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group hover:-translate-y-1 transition-transform">
-                        <div className="flex items-center gap-6 mb-6 text-white text-shadow-glow group-hover:text-neon-magenta transition-colors">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
-                            <span className="font-mono text-3xl tracking-widest uppercase">TikTok</span>
+                    {/* TikTok Column */}
+                    <div className="flex flex-col items-center flex-1 w-full max-w-[400px]">
+                        <a href="https://www.tiktok.com/@zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group hover:-translate-y-1 transition-transform w-full">
+                            <div className="flex items-center gap-6 mb-6 text-white text-shadow-glow group-hover:text-neon-magenta transition-colors">
+                                <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+                                <span className="font-mono text-3xl tracking-widest uppercase">TikTok</span>
+                            </div>
+                            <h3 className="font-mono text-7xl md:text-8xl lg:text-[8rem] font-bold text-neon-magenta" style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.2)" }}>
+                                {tiktokCount}K
+                            </h3>
+                            <p className="font-sans text-ghost/50 mt-4 text-sm uppercase tracking-widest">
+                                среднее кол-во просмотров
+                            </p>
+                        </a>
+
+                        {/* TikTok Evidence */}
+                        <div className="mt-12 w-full max-w-[320px] transition-transform duration-500 hover:scale-[1.02]">
+                            <img src="/images/tiktok.png" alt="TikTok Analytics" className="w-full h-auto block rounded-2xl shadow-2xl" />
                         </div>
-                        <h3 className="font-mono text-7xl md:text-8xl lg:text-[8rem] font-bold text-neon-magenta" style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.2)" }}>
-                            {tiktokCount}K
-                        </h3>
-                        <p className="font-sans text-ghost/50 mt-4 text-sm uppercase tracking-widest">
-                            среднее кол-во просмотров
-                        </p>
-                    </a>
+                    </div>
 
-                    <div className="hidden md:block w-px h-32 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+                    <div className="hidden md:block w-px min-h-[500px] bg-gradient-to-b from-transparent via-white/10 to-transparent self-stretch my-8" />
 
-                    <a href="https://www.instagram.com/zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group hover:-translate-y-1 transition-transform">
-                        <div className="flex items-center gap-6 mb-6 text-white text-shadow-glow group-hover:text-neon-magenta transition-colors">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 .25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" /></svg>
-                            <span className="font-mono text-3xl tracking-widest uppercase">Instagram</span>
+                    {/* Instagram Column */}
+                    <div className="flex flex-col items-center flex-1 w-full max-w-[400px]">
+                        <a href="https://www.instagram.com/zapretnaya_istoriya" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group hover:-translate-y-1 transition-transform w-full">
+                            <div className="flex items-center gap-6 mb-6 text-white text-shadow-glow group-hover:text-neon-magenta transition-colors">
+                                <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 .25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" /></svg>
+                                <span className="font-mono text-3xl tracking-widest uppercase">Instagram</span>
+                            </div>
+                            <h3 className="font-mono text-7xl md:text-8xl lg:text-[8rem] font-bold text-neon-magenta" style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.2)" }}>
+                                {instaCount}K
+                            </h3>
+                            <p className="font-sans text-ghost/50 mt-4 text-sm uppercase tracking-widest">
+                                среднее кол-во просмотров
+                            </p>
+                        </a>
+
+                        {/* Instagram Evidence */}
+                        <div className="mt-12 w-full max-w-[320px] transition-transform duration-500 hover:scale-[1.02]">
+                            <img src="/images/instagram.png" alt="Instagram Analytics" className="w-full h-auto block rounded-2xl shadow-2xl" />
                         </div>
-                        <h3 className="font-mono text-7xl md:text-8xl lg:text-[8rem] font-bold text-neon-magenta" style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.2)" }}>
-                            {instaCount}K
-                        </h3>
-                        <p className="font-sans text-ghost/50 mt-4 text-sm uppercase tracking-widest">
-                            среднее кол-во просмотров
-                        </p>
-                    </a>
+                    </div>
                 </div>
 
                 {/* 6 Mini Video Cards split by platform */}
