@@ -5,12 +5,6 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 
-const SHOWREEL_VIDEOS = [
-    "/images/video1.mp4",
-    "/images/video2.mp4",
-    "/images/video3.mp4"
-];
-
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
@@ -37,26 +31,17 @@ export default function Hero() {
             ref={containerRef}
             className="relative z-10 w-full h-[100dvh] flex items-end pb-[10vh] overflow-hidden bg-deep-void break-words"
         >
-            {/* Background Videos Side-by-Side */}
-            <div className="absolute inset-0 z-0 bg-black flex">
-                {SHOWREEL_VIDEOS.map((src) => (
-                    <div key={src} className="flex-1 relative h-full overflow-hidden border-r border-white/5 last:border-r-0">
-                        <video
-                            src={src}
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            className="absolute inset-0 w-full h-full object-cover opacity-70"
-                        />
-                    </div>
-                ))}
-
-                {/* Overlay to ensure text readability */}
-                <div className="absolute inset-0 bg-black/50 z-20 pointer-events-none" />
+            {/* Background Image / Texture */}
+            <div className="absolute inset-0 z-0">
+                <div
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+                    style={{
+                        backgroundImage: "url('/images/hero-bg.jpg.png')"
+                    }}
+                />
                 {/* Gradients to focus content bottom-left */}
-                <div className="absolute inset-0 bg-gradient-to-t from-deep-void via-deep-void/60 to-transparent z-20 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-deep-void via-deep-void/80 to-transparent w-[90%] md:w-[70%] z-20 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-deep-void via-deep-void/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-deep-void via-deep-void/60 to-transparent w-[80%]" />
             </div>
 
             <div className="relative z-10 w-full px-4 sm:px-6 lg:px-20 max-w-7xl mx-auto flex flex-col items-start justify-end h-full">
