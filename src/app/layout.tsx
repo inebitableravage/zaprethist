@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: "Мастер-класс по созданию ИИ-анимационных видео, которые набирают сотни тысяч и миллионы просмотров.",
 };
 
+import SmoothScroll from "@/components/SmoothScroll";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${spaceGrotesk.variable} ${instrumentSerif.variable} ${inter.variable} ${firaCode.variable}`}>
       <body className="antialiased min-h-screen relative font-sans text-ghost bg-deep-void">
+        <SmoothScroll />
         {/* Global Noise Overlay */}
         <div className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.04]">
           <svg className="absolute inset-0 w-full h-full">
