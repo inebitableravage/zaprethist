@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: "Мастер-класс по созданию ИИ-анимационных видео, которые набирают сотни тысяч и миллионы просмотров.",
 };
 
+import { Analytics } from "@vercel/analytics/react";
 import SmoothScroll from "@/components/SmoothScroll";
 
 export default function RootLayout({
@@ -35,6 +36,7 @@ export default function RootLayout({
         </div>
 
         {children}
+        <Analytics />
       </body>
     </html>
   );
