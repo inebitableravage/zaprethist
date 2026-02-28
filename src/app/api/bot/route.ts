@@ -69,9 +69,16 @@ export async function POST(req: Request) {
             const chatId = body.message.chat.id;
             const text = body.message.text;
 
+            // Хелпер: если прислали документ, отвечаем его file_id (чтобы пользователь мог его узнать)
+            if (body.message.document) {
+                const fileId = body.message.document.file_id;
+                await sendMessage(chatId, `Вот ID твоего файла. Скопируй его в переменную <code>PDF_FILE_ID</code> в Vercel:\n\n<code>${fileId}</code>`);
+                return NextResponse.json({ ok: true });
+            }
+
             if (text === '/start') {
                 console.log('Bot Start command received');
-                const welcomeText = "Привет! Чтобы получить гайд, необходимо подписаться на наш закрытый канал.";
+                const welcomeText = `Привет! Чтобы забрать бесплатный гайд по созданию AI-видео, нужно выполнить одно условие:\n\nПодпишись на мой основной канал: <a href="${CHANNEL_URL || 'https://t.me/'}">Запретная История</a>`;
                 const keyboard = {
                     inline_keyboard: [
                         [{ text: '1. Подписаться на канал', url: CHANNEL_URL || 'https://t.me/' }],
