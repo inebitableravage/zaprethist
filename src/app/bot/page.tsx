@@ -7,6 +7,7 @@ export default function BotRedirectPage() {
     // Use the tg:// scheme to force app opening where possible
     const telegramDeepLink = telegramBotUrl.replace('https://t.me/', 'tg://resolve?domain=');
     const [isTikTok, setIsTikTok] = useState(false);
+    const [clicked, setClicked] = useState(false);
 
     useEffect(() => {
         // Check if we are inside TikTok's in-app browser
@@ -35,16 +36,16 @@ export default function BotRedirectPage() {
                 </h1>
 
                 {isTikTok ? (
-                    <div className="bg-red-900/20 border border-red-500/50 p-6 rounded-lg mb-8 text-left max-w-[320px] mx-auto">
-                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                            ⚠️ Нужно открыть это окно в браузере
+                    <div className="bg-red-900/40 border border-red-500 p-6 rounded-xl mb-8 text-left max-w-[340px] mx-auto shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-white">
+                            🚨 Внимание!
                         </h2>
-                        <p className="font-sans text-ghost/90 mb-4 whitespace-normal break-words">
-                            TikTok блокирует переход в Telegram. Чтобы забрать гайд:
+                        <p className="font-sans text-white/90 mb-4 whitespace-normal break-words text-lg">
+                            TikTok блокирует Telegram. Чтобы бот с гайдом открылся, нужно:
                         </p>
-                        <ol className="list-decimal list-inside font-sans text-ghost/90 space-y-2 mb-4">
-                            <li>Нажми на <span className="font-bold">три точки (•••)</span> в правом верхнем углу.</li>
-                            <li>Выбери <span className="font-bold">«Открыть в браузере»</span> (или Safari/Chrome).</li>
+                        <ol className="list-decimal list-inside font-sans text-white font-bold space-y-3 mb-2 text-lg">
+                            <li>Нажать на <span className="text-neon-magenta">три точки (•••)</span> сверху справа ↑</li>
+                            <li>Выбрать <span className="text-neon-magenta">«Открыть в браузере»</span> (Safari/Chrome)</li>
                         </ol>
                     </div>
                 ) : (
@@ -55,16 +56,23 @@ export default function BotRedirectPage() {
 
                 <button
                     onClick={() => {
+                        setClicked(true);
+                        // Всегда пробуем прямую ссылку на приложение
                         window.location.href = telegramDeepLink;
-                        setTimeout(() => {
-                            window.location.href = telegramBotUrl;
-                        }, 1000);
+
+                        // Если мы НЕ в тиктоке, делаем фоллбек на t.me
+                        // В Тиктоке фоллбек на t.me делать НЕЛЬЗЯ, потому что там тупик (кнопка Start Bot не нажимается)
+                        if (!isTikTok) {
+                            setTimeout(() => {
+                                window.location.href = telegramBotUrl;
+                            }, 1500);
+                        }
                     }}
-                    className="group relative inline-flex items-center justify-center px-8 py-4 font-sans text-lg font-bold text-deep-void bg-neon-magenta rounded-md overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,0,255,0.6)] w-[280px] sm:w-auto mx-auto"
+                    className={`group relative inline-flex items-center justify-center px-8 py-4 font-sans text-lg font-bold text-deep-void bg-neon-magenta rounded-md overflow-hidden transition-all duration-300 w-[280px] sm:w-auto mx-auto ${isTikTok ? 'opacity-80' : 'hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,0,255,0.6)]'}`}
                 >
                     <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
                     <span className="relative flex items-center gap-2 px-2 whitespace-nowrap">
-                        ОТКРЫТЬ TELEGRAM
+                        ПРОБОВАТЬ ОТКРЫТЬ
                         <svg
                             className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0"
                             fill="none"
@@ -75,6 +83,12 @@ export default function BotRedirectPage() {
                         </svg>
                     </span>
                 </button>
+
+                {clicked && isTikTok && (
+                    <p className="mt-6 text-red-400 font-bold animate-pulse text-lg">
+                        Ничего не произошло? Сделайте по инструкции в красной рамке ☝️
+                    </p>
+                )}
             </div>
         </div>
     );
