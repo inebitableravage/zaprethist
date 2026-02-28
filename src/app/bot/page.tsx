@@ -2,6 +2,44 @@
 
 import { useEffect, useState } from 'react';
 
+function CopyUsername({ username }: { username: string }) {
+    const [copied, setCopied] = useState(false);
+    const handleCopy = () => {
+        navigator.clipboard.writeText(username).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2500);
+        });
+    };
+    return (
+        <button
+            onClick={handleCopy}
+            style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                width: '100%', padding: '14px 16px',
+                background: copied ? 'rgba(34,197,94,0.12)' : 'rgba(34,158,217,0.10)',
+                border: copied ? '1px solid rgba(34,197,94,0.4)' : '1px solid rgba(34,158,217,0.3)',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+            }}
+        >
+            <span style={{ color: '#f1f5f9', fontWeight: 700, fontSize: '17px', letterSpacing: '0.3px' }}>
+                {username}
+            </span>
+            <span style={{
+                color: copied ? '#4ade80' : '#229ED9',
+                fontSize: '13px', fontWeight: 600,
+                background: copied ? 'rgba(34,197,94,0.15)' : 'rgba(34,158,217,0.15)',
+                padding: '4px 10px', borderRadius: '6px',
+                flexShrink: 0,
+            }}>
+                {copied ? '✓ Скопировано' : 'Копировать'}
+            </span>
+        </button>
+    );
+}
+
+
 export default function BotRedirectPage() {
     const telegramBotUrl = process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL || 'https://t.me/zaprethistory_bot';
     const telegramDeepLink = telegramBotUrl.replace('https://t.me/', 'tg://resolve?domain=');
@@ -175,6 +213,26 @@ export default function BotRedirectPage() {
                     ПОЛУЧИТЬ ГАЙД В TELEGRAM
                 </button>
 
+                {/* OR separator */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '20px 0' }}>
+                    <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+                    <span style={{ color: '#475569', fontSize: '13px', fontWeight: 500 }}>или</span>
+                    <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+                </div>
+
+                {/* Alternative: copy username */}
+                <div style={{
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: '14px',
+                    padding: '20px',
+                }}>
+                    <p style={{ color: '#94a3b8', fontSize: '14px', margin: '0 0 12px', textAlign: 'center' }}>
+                        Найди бота вручную — скопируй имя и вставь в поиск Telegram:
+                    </p>
+                    <CopyUsername username="@zaprethistory_bot" />
+                </div>
+
                 {/* Fallback hint after clicking */}
                 {clickCount > 0 && isTikTok && (
                     <div style={{
@@ -186,10 +244,10 @@ export default function BotRedirectPage() {
                         textAlign: 'center',
                     }}>
                         <p style={{ color: '#f87171', fontWeight: 600, margin: '0 0 4px', fontSize: '15px' }}>
-                            Не открылось?
+                            Кнопка не сработала?
                         </p>
                         <p style={{ color: '#94a3b8', margin: 0, fontSize: '14px' }}>
-                            Воспользуйся инструкцией выше — три точки → Открыть в браузере.
+                            Открой страницу в браузере через три точки — или скопируй имя бота выше и найди его в Telegram.
                         </p>
                     </div>
                 )}
