@@ -70,9 +70,13 @@ export async function POST(req: Request) {
             const text = body.message.text;
 
             if (text === '/start') {
+                console.log('Bot Start command received');
                 const welcomeText = "Привет! Чтобы получить гайд, необходимо подписаться на наш закрытый канал.";
                 const keyboard = {
-                    inline_keyboard: [[{ text: 'Проверить подписку', callback_data: 'check_sub' }]],
+                    inline_keyboard: [
+                        [{ text: '1. Подписаться на канал', url: CHANNEL_URL || 'https://t.me/' }],
+                        [{ text: '2. Проверить подписку', callback_data: 'check_sub' }]
+                    ],
                 };
                 await sendMessage(chatId, welcomeText, keyboard);
             }
@@ -84,6 +88,8 @@ export async function POST(req: Request) {
             const userId = body.callback_query.from.id;
             const callbackData = body.callback_query.data;
 
+            console.log(`Callback received: ${callbackData} from user ${userId}`);
+
             // Обязательно нужно ответить на callback_query, чтобы убрать часики на кнопке
             await fetch(`${TELEGRAM_API}/answerCallbackQuery`, {
                 method: 'POST',
@@ -92,18 +98,23 @@ export async function POST(req: Request) {
             });
 
             if (callbackData === 'check_sub') {
+                console.log('Checking subscription for user:', userId);
                 const isSubscribed = await checkSubscription(userId);
+                console.log('Is user subscribed?', isSubscribed);
 
                 if (isSubscribed) {
                     const caption = "Держи гайд! А если хочешь научиться делать такие же видео — жми сюда: zaprethistory.ru";
 
                     if (PDF_FILE_ID) {
+                        console.log('Sending PDF file:', PDF_FILE_ID);
                         await sendDocument(chatId, PDF_FILE_ID, caption);
                     } else {
-                        await sendMessage(chatId, "Гайд временно недоступен. (Не настроен PDF_FILE_ID проекта)");
+                        console.error('PDF_FILE_ID is not set in environment variables');
+                        await sendMessage(chatId, "Гайд успешно разблокирован! Но администратор еще не загрузил файл (не установлен PDF_FILE_ID).");
                     }
                 } else {
-                    const notSubText = "Сначала подпишись на канал!";
+                    console.log('User not subscribed, sending reminder');
+                    const notSubText = "Я проверил — подписки пока нет. Сначала подпишись на канал, а потом нажимай кнопку проверки!";
                     const keyboard = {
                         inline_keyboard: [
                             [{ text: 'К каналу', url: CHANNEL_URL || 'https://t.me/' }],
