@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { JWT } from 'google-auth-library';
 
 export const dynamic = 'force-dynamic';
 
@@ -6,6 +8,60 @@ const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID;
 const CHANNEL_URL = process.env.TELEGRAM_CHANNEL_URL;
 const PDF_FILE_ID = process.env.PDF_FILE_ID;
+
+// Google Sheets auth
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
+const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
+
+// Функция для обновления Google Таблицы
+async function updateGoogleSheet(userData: {
+    chatId: number;
+    username: string;
+    name: string;
+    status: string;
+}) {
+    if (!GOOGLE_SHEET_ID || !GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
+        console.log('Google Sheets is not configured. Missing credentials.');
+        return;
+    }
+
+    try {
+        const jwt = new JWT({
+            email: GOOGLE_SERVICE_ACCOUNT_EMAIL,
+            key: GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+
+        const doc = new GoogleSpreadsheet(GOOGLE_SHEET_ID, jwt);
+        await doc.loadInfo();
+        const sheet = doc.sheetsByIndex[0];
+
+        const rows = await sheet.getRows();
+        const existingRow = rows.find(r => r.get('Chat ID') === userData.chatId.toString());
+
+        const dateStr = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
+
+        if (existingRow) {
+            existingRow.assign({
+                'Status': userData.status,
+                'Username': userData.username || existingRow.get('Username'),
+                'Name': userData.name || existingRow.get('Name')
+            });
+            await existingRow.save();
+        } else {
+            await sheet.addRow({
+                'Дата': dateStr,
+                'Chat ID': userData.chatId.toString(),
+                'Username': userData.username || '',
+                'Name': userData.name || '',
+                'Status': userData.status
+            });
+        }
+    } catch (error) {
+        console.error('Error updating Google Sheets:', error);
+    }
+}
 
 const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 
@@ -78,6 +134,14 @@ export async function POST(req: Request) {
 
             if (text === '/start') {
                 console.log('Bot Start command received');
+
+                const from = body.message.from;
+                const username = from.username ? `@${from.username}` : '';
+                const name = [from.first_name, from.last_name].filter(Boolean).join(' ');
+
+                // Записываем пользователя в Google Таблицу
+                await updateGoogleSheet({ chatId, username, name, status: 'Зашел' }).catch(console.error);
+
                 const welcomeText = "Привет! Гайд уже готов к отправке.\n\nЧтобы его забрать, нужно сделать один простой шаг: подпишись на мой основной канал «Запретная история».\n\nКак подпишешься, нажимай «Проверить подписку» и бот сразу пришлёт файл.";
                 const keyboard = {
                     inline_keyboard: [
@@ -115,6 +179,13 @@ export async function POST(req: Request) {
                     if (PDF_FILE_ID) {
                         console.log('Sending PDF file:', PDF_FILE_ID);
                         await sendDocument(chatId, PDF_FILE_ID, caption);
+
+                        const from = body.callback_query.from;
+                        const username = from.username ? `@${from.username}` : '';
+                        const name = [from.first_name, from.last_name].filter(Boolean).join(' ');
+
+                        // Обновляем статус пользователя в Google Таблице
+                        await updateGoogleSheet({ chatId: userId, username, name, status: 'Гайд получен' }).catch(console.error);
                     } else {
                         console.error('PDF_FILE_ID is not set in environment variables');
                         await sendMessage(chatId, "Гайд успешно разблокирован! Но администратор еще не загрузил файл (не установлен PDF_FILE_ID).");
