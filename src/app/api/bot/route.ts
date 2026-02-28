@@ -78,11 +78,11 @@ export async function POST(req: Request) {
 
             if (text === '/start') {
                 console.log('Bot Start command received');
-                const welcomeText = `Привет! Чтобы забрать бесплатный гайд по созданию AI-видео, нужно выполнить одно условие:\n\nПодпишись на мой основной канал: <a href="${CHANNEL_URL || 'https://t.me/'}">Запретная История</a>`;
+                const welcomeText = "Привет! Гайд уже готов к отправке.\n\nЧтобы его забрать, нужно сделать один простой шаг: подпишись на мой основной канал «Запретная история».\n\nКак подпишешься, нажимай «Проверить подписку» и бот сразу пришлёт файл.";
                 const keyboard = {
                     inline_keyboard: [
-                        [{ text: '1. Подписаться на канал', url: CHANNEL_URL || 'https://t.me/' }],
-                        [{ text: '2. Проверить подписку', callback_data: 'check_sub' }]
+                        [{ text: 'Подписаться на канал', url: CHANNEL_URL || 'https://t.me/' }],
+                        [{ text: 'Проверить подписку', callback_data: 'check_sub' }]
                     ],
                 };
                 await sendMessage(chatId, welcomeText, keyboard);
@@ -110,7 +110,7 @@ export async function POST(req: Request) {
                 console.log('Is user subscribed?', isSubscribed);
 
                 if (isSubscribed) {
-                    const caption = "Держи гайд! А если хочешь научиться делать такие же видео — жми сюда: zaprethistory.ru";
+                    const caption = "Файл отправлен, держи! Внутри я разобрал всю свою систему работы над роликами.\n\nЕсли после прочтения захочешь перенять мой процесс целиком и научиться делать такую же графику, анимацию и звук, вся информация по мастер-классу здесь: zaprethistory.ru";
 
                     if (PDF_FILE_ID) {
                         console.log('Sending PDF file:', PDF_FILE_ID);
@@ -121,10 +121,10 @@ export async function POST(req: Request) {
                     }
                 } else {
                     console.log('User not subscribed, sending reminder');
-                    const notSubText = "Я проверил — подписки пока нет. Сначала подпишись на канал, а потом нажимай кнопку проверки!";
+                    const notSubText = "Бот пока не видит подписку. Сначала подпишись на канал, а затем нажми кнопку проверки еще раз.";
                     const keyboard = {
                         inline_keyboard: [
-                            [{ text: 'К каналу', url: CHANNEL_URL || 'https://t.me/' }],
+                            [{ text: 'Подписаться на канал', url: CHANNEL_URL || 'https://t.me/' }],
                             [{ text: 'Проверить подписку', callback_data: 'check_sub' }]
                         ],
                     };
