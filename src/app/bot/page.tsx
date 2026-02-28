@@ -128,9 +128,9 @@ export default function BotRedirectPage() {
 
                         {/* OR divider */}
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '14px 0' }}>
-                            <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.07)' }} />
-                            <span style={{ color: '#334155', fontSize: '12px' }}>или</span>
-                            <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.07)' }} />
+                            <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.12)' }} />
+                            <span style={{ color: '#64748b', fontSize: '14px', fontWeight: 600, letterSpacing: '1px' }}>ИЛИ</span>
+                            <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.12)' }} />
                         </div>
 
                         {/* Copy username */}
