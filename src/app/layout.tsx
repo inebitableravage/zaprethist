@@ -1,16 +1,30 @@
-import type { Metadata } from "next";
-import { Space_Grotesk, Instrument_Serif, Inter, Fira_Code } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Sofia_Sans_Extra_Condensed, Inter } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk" });
-const instrumentSerif = Instrument_Serif({ weight: ["400"], style: ["italic"], subsets: ["latin"], variable: "--font-instrument-serif" });
+const sofia = Sofia_Sans_Extra_Condensed({ subsets: ["latin", "cyrillic"], weight: ["700", "800"], variable: "--font-sofia" });
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
-const firaCode = Fira_Code({ subsets: ["latin", "cyrillic"], variable: "--font-fira-code" });
+
+const title = "ЗАПРЕТНАЯ ИСТОРИЯ | ИИ-Анимация";
+const description = "Мастер-класс по созданию ИИ-анимационных видео, которые набирают сотни тысяч и миллионы просмотров.";
 
 export const metadata: Metadata = {
-  title: "ЗАПРЕТНАЯ ИСТОРИЯ | ИИ-Анимация",
-  description: "Мастер-класс по созданию ИИ-анимационных видео, которые набирают сотни тысяч и миллионы просмотров.",
+  metadataBase: new URL("https://www.zaprethistory.ru"),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: "/",
+    siteName: "Запретная История",
+    locale: "ru_RU",
+    type: "website",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Запретная История — ИИ-анимация на миллионы просмотров" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
+
+export const viewport: Viewport = { themeColor: "#0B0A0E" };
 
 import { Analytics } from "@vercel/analytics/react";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -21,20 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${spaceGrotesk.variable} ${instrumentSerif.variable} ${inter.variable} ${firaCode.variable}`}>
-      <body className="antialiased min-h-screen relative font-sans text-ghost bg-deep-void">
+    <html lang="ru" className={`${sofia.variable} ${inter.variable}`}>
+      <body className="min-h-screen font-sans text-text bg-bg">
         <SmoothScroll />
-        {/* Global Noise Overlay */}
-        <div className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.04]">
-          <svg className="absolute inset-0 w-full h-full">
-            <filter id="noiseFilter">
-              <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-            </filter>
-            <rect width="100%" height="100%" fill="transparent" />
-            <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-          </svg>
-        </div>
-
         {children}
         <Analytics />
       </body>

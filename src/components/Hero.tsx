@@ -1,85 +1,77 @@
-"use client";
-
-import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
+const STATS = [
+    { value: "12М", label: "просмотров за первый месяц" },
+    { value: "55К", label: "подписчиков с нуля" },
+    { value: "9", label: "роликов" },
+];
 
 export default function Hero() {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const textRef = useRef<HTMLDivElement>(null);
-
-    useGSAP(
-        () => {
-            if (!textRef.current) return;
-            const elements = textRef.current.children;
-
-            gsap.from(elements, {
-                y: 40,
-                opacity: 0,
-                stagger: 0.08,
-                ease: "power3.out",
-                duration: 1.2,
-                delay: 0.2, // wait a bit after load
-            });
-        },
-        { scope: containerRef }
-    );
-
     return (
-        <section
-            ref={containerRef}
-            className="relative z-10 w-full h-[100dvh] flex items-end pb-[10vh] overflow-hidden bg-deep-void break-words"
-        >
-            {/* Background Image / Texture */}
-            <div className="absolute inset-0 z-0">
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
-                    style={{
-                        backgroundImage: "url('/images/hero-bg.jpg.png')"
-                    }}
-                />
-                {/* Gradients to focus content bottom-left */}
-                <div className="absolute inset-0 bg-gradient-to-t from-deep-void via-deep-void/60 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-deep-void via-deep-void/60 to-transparent w-[80%]" />
-            </div>
-
-            <div className="relative z-10 w-full px-4 sm:px-6 lg:px-20 max-w-7xl mx-auto flex flex-col items-start justify-end h-full">
-                <div ref={textRef} className="max-w-3xl flex flex-col items-start gap-0">
-                    <h1 className="font-grotesk font-bold text-4xl md:text-5xl lg:text-7xl leading-none">
-                        Создавай ИИ-анимацию
-                    </h1>
-                    <h2
-                        className="font-serif italic text-[11vw] md:text-7xl lg:text-9xl tracking-tight text-white mb-6"
-                        style={{ textShadow: "0 0 40px rgba(255, 0, 255, 0.4)", lineHeight: "1" }}
-                    >
-                        на миллионы просмотров.
-                    </h2>
-                    <p className="font-sans text-ghost/70 text-lg md:text-xl max-w-xl mb-8 leading-relaxed">
-                        Мастер-класс от автора канала Запретная История. Весь процесс на экране: визуал, анимация, озвучка, монтаж.
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                        <Link
-                            href="#pricing"
-                            className="group relative overflow-hidden rounded-full bg-neon-magenta px-8 py-4 text-center font-bold text-white transition-all hover:scale-[1.03] shadow-[0_0_20px_rgba(255,0,255,0.3)]"
-                        >
-                            <span className="relative z-10">Получить доступ</span>
-                        </Link>
-
-                        <Link
-                            href="https://t.me/zaprethist"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative overflow-hidden rounded-full border-2 border-neon-magenta/50 px-8 py-4 text-center font-bold transition-all hover:scale-[1.03] hover:border-neon-magenta"
-                        >
-                            <span className="absolute inset-0 bg-neon-magenta/10 translate-y-[100%] transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:translate-y-0" />
-                            <span className="relative z-10 group-hover:-translate-y-[1px] inline-block transition-transform">
+        <section className="w-full pt-28 md:pt-36 pb-4 md:pb-20">
+            <div className="mx-auto max-w-6xl px-5 md:px-8">
+                <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+                    <div className="lg:col-span-7">
+                        <p className="text-sm text-muted mb-6">Мастер-класс от автора канала «Запретная История»</p>
+                        <h1 className="font-display font-extrabold uppercase text-[15vw] sm:text-8xl lg:text-[7.25rem] leading-[0.86] tracking-tight">
+                            Создавай ИИ&#8209;анимацию на <span className="text-accent">миллионы</span> просмотров
+                        </h1>
+                        <p className="mt-8 text-lg md:text-xl text-muted max-w-xl leading-relaxed">
+                            Весь процесс на экране: визуал, анимация, озвучка, монтаж.
+                        </p>
+                        <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-6 sm:items-center">
+                            <Link
+                                href="#pricing"
+                                className="inline-flex h-14 items-center justify-center rounded-md bg-accent px-8 font-semibold text-bg hover:bg-accent-hover transition-colors"
+                            >
+                                Получить доступ
+                            </Link>
+                            <Link
+                                href="https://t.me/zaprethist"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group inline-flex h-14 items-center justify-center gap-2 rounded-md border border-line px-6 sm:border-0 sm:px-0 font-medium text-text hover:text-accent transition-colors"
+                            >
                                 Скачать бесплатный гайд
-                            </span>
-                        </Link>
+                                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Real work, not a wallpaper: the two most-viewed videos */}
+                    <div className="lg:col-span-5 grid grid-cols-2 gap-3 md:gap-4">
+                        <Image
+                            src="/images/thumb-1.jpg.jpg"
+                            alt="Ролик канала: 2,7 млн просмотров в TikTok"
+                            width={912}
+                            height={1211}
+                            priority
+                            sizes="(min-width: 1024px) 22vw, 45vw"
+                            className="w-full h-auto rounded-lg border border-line"
+                        />
+                        <Image
+                            src="/images/thumb-3.jpg.jpg"
+                            alt="Ролик канала: 2,5 млн просмотров в TikTok"
+                            width={913}
+                            height={1211}
+                            priority
+                            sizes="(min-width: 1024px) 22vw, 45vw"
+                            className="w-full h-auto rounded-lg border border-line lg:mt-16"
+                        />
                     </div>
                 </div>
+
+                <dl className="mt-16 md:mt-20 grid grid-cols-3 border-t border-line">
+                    {STATS.map((s, i) => (
+                        <div key={s.label} className={`pt-6 ${i > 0 ? "pl-4 md:pl-8 border-l border-line" : ""}`}>
+                            <dt className="sr-only">{s.label}</dt>
+                            <dd className="font-display font-extrabold text-5xl md:text-7xl leading-none">{s.value}</dd>
+                            <dd className="mt-2 text-xs md:text-sm text-muted">{s.label}</dd>
+                        </div>
+                    ))}
+                </dl>
             </div>
         </section>
     );

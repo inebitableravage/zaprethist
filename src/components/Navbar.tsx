@@ -1,85 +1,70 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+
+const NAV_LINKS = [
+    { name: "Результаты", href: "#results" },
+    { name: "Программа", href: "#program" },
+    { name: "Тарифы", href: "#pricing" },
+    { name: "Вопросы", href: "#faq" },
+];
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const navRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener("scroll", handleScroll);
+        const handleScroll = () => setIsScrolled(window.scrollY > 24);
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const navLinks = [
-        { name: "Результаты", href: "#results" },
-        { name: "Программа", href: "#program" },
-        { name: "Тарифы", href: "#pricing" },
-        { name: "FAQ", href: "#faq" },
-    ];
+    const solid = isScrolled || mobileMenuOpen;
 
     return (
         <header
-            ref={navRef}
-            className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-full transition-all duration-300 ${isScrolled
-                ? "bg-deep-void/70 backdrop-blur-xl border-b border-neon-magenta/30 py-3 shadow-[0_0_20px_rgba(255,0,255,0.05)]"
-                : "bg-transparent py-5"
-                }`}
+            className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${solid ? "bg-bg/85 backdrop-blur-md border-line" : "border-transparent"}`}
         >
-            <div className="flex items-center justify-between px-6 lg:px-10">
-                <Link href="/" className="font-grotesk font-bold tracking-widest text-lg lg:text-xl relative group">
-                    <span className="relative z-10">ЗАПРЕТНАЯ ИСТОРИЯ</span>
+            <div className="mx-auto max-w-6xl px-5 md:px-8 h-16 flex items-center justify-between gap-6">
+                <Link href="/" className="font-display font-extrabold uppercase text-xl tracking-wide leading-none">
+                    Запретная История
                 </Link>
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex flex-1 items-center justify-center gap-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-sm font-sans font-medium hover:-translate-y-[1px] transition-transform hover:text-neon-magenta"
-                        >
+                <nav className="hidden md:flex items-center gap-8">
+                    {NAV_LINKS.map((link) => (
+                        <Link key={link.href} href={link.href} className="text-sm text-muted hover:text-text transition-colors">
                             {link.name}
                         </Link>
                     ))}
                 </nav>
 
-                <div className="hidden md:block">
-                    <Link
-                        href="#pricing"
-                        className="group relative overflow-hidden rounded-full border border-neon-magenta px-6 py-2.5 text-sm font-bold transition-all hover:scale-[1.03] hover:shadow-[0_0_15px_rgba(255,0,255,0.3)] block"
-                    >
-                        <span className="absolute inset-0 bg-neon-magenta translate-y-[100%] transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:translate-y-0" />
-                        <span className="relative z-10 group-hover:text-deep-void transition-colors transition-delay-100">
-                            Получить доступ
-                        </span>
-                    </Link>
-                </div>
+                <Link
+                    href="#pricing"
+                    className="hidden md:inline-flex h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-bg hover:bg-accent-hover transition-colors"
+                >
+                    Получить доступ
+                </Link>
 
-                {/* Mobile menu toggle */}
                 <button
-                    className="md:hidden text-ghost"
+                    className="md:hidden -mr-2 p-2 text-text"
+                    aria-label={mobileMenuOpen ? "Закрыть меню" : "Открыть меню"}
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
-                    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
                 </button>
             </div>
 
-            {/* Mobile Nav */}
             {mobileMenuOpen && (
-                <div className="absolute top-[120%] left-0 w-full bg-charcoal/95 backdrop-blur-xl border border-white/5 rounded-3xl overflow-hidden flex flex-col p-4 shadow-2xl md:hidden">
-                    {navLinks.map((link) => (
+                <div className="md:hidden border-t border-line bg-bg px-5 pb-6">
+                    {NAV_LINKS.map((link) => (
                         <Link
-                            key={link.name}
+                            key={link.href}
                             href={link.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="py-4 text-center border-b border-white/5 font-sans"
+                            className="block py-4 border-b border-line text-lg"
                         >
                             {link.name}
                         </Link>
@@ -87,7 +72,7 @@ export default function Navbar() {
                     <Link
                         href="#pricing"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="mt-4 py-3 bg-neon-magenta text-deep-void font-bold rounded-full text-center shadow-[0_0_20px_rgba(255,0,255,0.4)]"
+                        className="mt-6 flex h-12 items-center justify-center rounded-md bg-accent font-semibold text-bg"
                     >
                         Получить доступ
                     </Link>

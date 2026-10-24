@@ -1,39 +1,46 @@
 @import "tailwindcss";
 
 @theme {
-  --color-deep-void: #0A0A0F;
-  --color-neon-magenta: #FF00FF;
-  --color-hot-pink: #FF2D8B;
-  --color-ghost: #E8E5F0;
-  --color-charcoal: #12121A;
-  --color-subtle-cyan: rgba(0, 240, 255, 0.2);
+  /* One dark base, one accent (the channel's magenta), used sparingly. */
+  --color-bg: #0B0A0E;
+  --color-surface: #141218;
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-text: #EDEAF0;
+  --color-muted: #9B96A4;
+  --color-accent: #FF2D7A;
+  --color-accent-hover: #FF4D8F;
 
-  --font-grotesk: var(--font-space-grotesk), sans-serif;
-  --font-serif: var(--font-instrument-serif), serif;
-  --font-mono: var(--font-fira-code), monospace;
-  --font-sans: var(--font-inter), sans-serif;
-  
-  --radius-2xl: 1.5rem;
-  --radius-3xl: 2rem;
-  --radius-4xl: 2.5rem;
-  --radius-5xl: 3rem;
+  /* Display = the video covers' font, so the site and the channel read as one brand. Both have Cyrillic. */
+  --font-display: var(--font-sofia), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
 @layer base {
-  body {
-    background-color: var(--color-deep-void);
-    color: var(--color-ghost);
-    font-family: var(--font-sans);
-    overflow-x: hidden;
-  }
-
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
-  /* Custom selection color */
-  ::selection {
-    background: var(--color-neon-magenta);
-    color: white;
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+}
+
+/* Scroll reveal (see Reveal.tsx): quick and short, so nothing sits blank while you scroll. */
+.reveal {
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(14px);
 }

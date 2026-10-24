@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start bg-deep-void w-full overflow-hidden">
+    <main className="flex min-h-screen flex-col items-center justify-start bg-bg w-full overflow-hidden">
       <Navbar />
       <Hero />
       <SocialProof />
