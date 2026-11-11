@@ -6,7 +6,7 @@ const sofia = Sofia_Sans_Extra_Condensed({ subsets: ["latin", "cyrillic"], weigh
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 
 const title = "ЗАПРЕТНАЯ ИСТОРИЯ | ИИ-Анимация";
-const description = "Мастер-класс по созданию ИИ-анимационных видео, которые набирают сотни тысяч и миллионы просмотров.";
+const description = "Курс «ИИ-режиссёр»: как в одиночку делать анимационные ИИ-ролики, от стиля и кадров до монтажа.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.zaprethistory.ru"),
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "Запретная История",
     locale: "ru_RU",
     type: "website",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Запретная История — ИИ-анимация на миллионы просмотров" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Запретная История: курс по ИИ-анимации" }],
   },
   twitter: { card: "summary_large_image" },
 };

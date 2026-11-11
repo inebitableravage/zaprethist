@@ -6,6 +6,7 @@ import ProcessTimeline from "@/components/ProcessTimeline";
 import Pricing from "@/components/Pricing";
 import Faq from "@/components/Faq";
 import Footer from "@/components/Footer";
+import StickyCta from "@/components/StickyCta";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Pricing />
       <Faq />
       <Footer />
+      <StickyCta />
     </main>
   );
 }

@@ -1,15 +1,21 @@
 import Link from "next/link";
 import { ArrowRight, Send, Youtube } from "lucide-react";
 import Reveal from "./Reveal";
+import { INSTAGRAM_PATH, TIKTOK_PATH } from "./SocialProof";
 
-// Instagram and TikTok are left out until the new accounts exist: the old ones were sold.
 const MEDIA = [
     { label: "Telegram", href: "https://t.me/zaprethist", Icon: Send },
     { label: "YouTube", href: "https://www.youtube.com/@zaprethistory", Icon: Youtube },
 ];
 
+// The new channel's accounts (the old ones were sold).
+const BRANDS = [
+    { label: "Instagram", href: "https://www.instagram.com/zaprethistory/", path: INSTAGRAM_PATH },
+    { label: "TikTok", href: "https://www.tiktok.com/@zapret_history", path: TIKTOK_PATH },
+];
+
 const NAV_LINKS = [
-    { name: "Результаты", href: "#results" },
+    { name: "Автор", href: "#results" },
     { name: "Программа", href: "#program" },
     { name: "Тарифы", href: "#pricing" },
     { name: "Вопросы", href: "#faq" },
@@ -25,20 +31,18 @@ export default function Footer() {
                         <div className="md:col-span-8">
                             <p className="text-sm text-accent mb-4">Бесплатно</p>
                             <h2 className="font-display font-extrabold uppercase text-5xl md:text-7xl leading-[0.9] tracking-tight">
-                                Не готовы к покупке?
+                                Ещё не решил?
                             </h2>
                             <p className="mt-5 text-lg text-muted max-w-xl leading-relaxed">
-                                Скачайте бесплатный гайд и посмотрите, как выглядит мой рабочий процесс.
+                                Открой бесплатный гайд и посмотри, как ролик проходит путь от строчки сценария до готового кадра.
                             </p>
                         </div>
                         <div className="md:col-span-4 md:justify-self-end">
                             <Link
-                                href="https://t.me/zaprethist"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href="/guide"
                                 className="group inline-flex h-14 w-full md:w-auto items-center justify-center gap-2 rounded-md border border-text/40 px-8 font-semibold hover:border-text transition-colors"
                             >
-                                Скачать гайд бесплатно
+                                Открыть гайд
                                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                             </Link>
                         </div>
@@ -52,7 +56,7 @@ export default function Footer() {
                         <div className="md:col-span-6">
                             <p className="font-display font-extrabold uppercase text-2xl tracking-wide">Запретная История</p>
                             <p className="mt-3 text-sm text-muted max-w-sm">
-                                ИИ-анимация на миллионы просмотров. От сценария до кино-качества за один вечер.
+                                Курс по ИИ-анимации. От готового сценария до готового ролика за один вечер.
                             </p>
                         </div>
 
@@ -66,6 +70,18 @@ export default function Footer() {
 
                         <div className="md:col-span-3 flex flex-col gap-4 text-sm">
                             <div className="flex items-center gap-4">
+                                {BRANDS.map(({ label, href, path }) => (
+                                    <a
+                                        key={label}
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={label}
+                                        className="text-muted hover:text-text transition-colors"
+                                    >
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={path} /></svg>
+                                    </a>
+                                ))}
                                 {MEDIA.map(({ label, href, Icon }) => (
                                     <a
                                         key={label}

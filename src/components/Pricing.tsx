@@ -5,27 +5,27 @@ import SectionHeader from "./SectionHeader";
 const TIERS = [
     {
         name: "Базовый",
-        price: "3 990 ₽",
+        price: "3 990 ₽",
         featured: false,
         features: [
-            "Полный список сервисов с моими настройками",
-            "Коллекция авторских стилей для генерации",
-            "Пошаговый процесс: визуал, анимация, озвучка, монтаж",
-            "Создание уникального голоса и профессиональный саунд-дизайн",
-            "Видеоуроки: весь рабочий процесс на экране",
-            "Доступ в закрытый чат учеников"
+            "Шесть модулей: от сервисов и доступа до публикации",
+            "Самый дешёвый путь: сервисы в разы дешевле обычного",
+            "Оплата и доступ из России и СНГ",
+            "Мои промпты раскадровки и анимации",
+            "Шаблоны карты стиля и чек-листы",
+            "Закрытый чат учеников, отвечаю сам",
+            "3 месяца обновлений"
         ]
     },
     {
-        name: "Персональное обучение",
-        price: "6 990 ₽",
+        name: "Личный",
+        price: "6 990 ₽",
         featured: true,
         features: [
-            "Всё из базового тарифа",
-            "Личный разбор ваших первых роликов",
-            "Обратная связь по сценарию, визуалу и монтажу",
-            "Помогу довести до уровня, который набирает просмотры",
-            "Работа со мной напрямую"
+            "Всё из Базового",
+            "Смотрю твою карту стиля и кадры до анимации",
+            "Разбор трёх готовых роликов по таймкодам",
+            "30 дней отвечаю тебе вне очереди"
         ]
     }
 ];
@@ -34,7 +34,7 @@ export default function Pricing() {
     return (
         <section id="pricing" className="w-full py-20 md:py-28">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
-                <SectionHeader num="04" title="Выберите свой формат" />
+                <SectionHeader num="04" title="Выбери формат" />
 
                 <div className="grid md:grid-cols-2 gap-6">
                     {TIERS.map((tier, i) => (
@@ -77,8 +77,27 @@ export default function Pricing() {
                     ))}
                 </div>
 
+                <Reveal className="mt-6 rounded-xl border border-line p-6 md:p-8 grid md:grid-cols-12 gap-5 md:gap-8 md:items-center">
+                    <div className="md:col-span-7">
+                        <p className="text-sm text-muted">Только первый модуль</p>
+                        <h3 className="mt-2 font-display font-extrabold uppercase text-4xl leading-none">Дешёвый старт</h3>
+                        <p className="mt-3 text-muted leading-relaxed">
+                            Все сервисы для ИИ-роликов в разы дешевле обычных 100 долларов в месяц: что брать, где и как оплатить из России и СНГ. Если потом возьмёшь курс, эти 990 ₽ зачту.
+                        </p>
+                    </div>
+                    <p className="md:col-span-2 font-display font-extrabold text-5xl leading-none whitespace-nowrap">990 ₽</p>
+                    <a
+                        href="https://t.me/inevitable_ravage"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="md:col-span-3 flex h-14 items-center justify-center rounded-md border border-line font-semibold text-text hover:border-text/60 transition-colors"
+                    >
+                        Получить доступ
+                    </a>
+                </Reveal>
+
                 <p className="mt-10 text-center text-muted">
-                    По вопросам —{" "}
+                    Вопросы пиши{" "}
                     <a
                         href="https://t.me/inevitable_ravage"
                         target="_blank"

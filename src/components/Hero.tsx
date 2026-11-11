@@ -14,12 +14,12 @@ export default function Hero() {
             <div className="mx-auto max-w-6xl px-5 md:px-8">
                 <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
                     <div className="lg:col-span-7">
-                        <p className="text-sm text-muted mb-6">Мастер-класс от автора канала «Запретная История»</p>
+                        <p className="text-sm text-muted mb-6">Курс «ИИ-режиссёр» от автора канала «Запретная История»</p>
                         <h1 className="font-display font-extrabold uppercase text-[15vw] sm:text-8xl lg:text-[7.25rem] leading-[0.86] tracking-tight">
-                            Создавай ИИ&#8209;анимацию на <span className="text-accent">миллионы</span> просмотров
+                            Создавай ИИ&#8209;анимацию <span className="text-accent">за один вечер</span>
                         </h1>
                         <p className="mt-8 text-lg md:text-xl text-muted max-w-xl leading-relaxed">
-                            Весь процесс на экране: визуал, анимация, озвучка, монтаж.
+                            Весь процесс на экране: стиль, кадры, анимация, голос и монтаж. Без лица, без команды и без подписок на 100 долларов.
                         </p>
                         <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-6 sm:items-center">
                             <Link
@@ -29,27 +29,36 @@ export default function Hero() {
                                 Получить доступ
                             </Link>
                             <Link
-                                href="https://t.me/zaprethist"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href="/guide"
                                 className="group inline-flex h-14 items-center justify-center gap-2 rounded-md border border-line px-6 sm:border-0 sm:px-0 font-medium text-text hover:text-accent transition-colors"
                             >
-                                Скачать бесплатный гайд
+                                Открыть бесплатный гайд
                                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                             </Link>
                         </div>
                     </div>
 
-                    {/* Real work, not a wallpaper: the two most-viewed videos */}
-                    <div className="lg:col-span-5 grid grid-cols-2 gap-3 md:gap-4">
+                    {/* Real work, not a wallpaper: a clip from the new channel between the two most-viewed videos */}
+                    <div className="lg:col-span-5 grid grid-cols-[1fr_1.3fr_1fr] items-center gap-2.5 md:gap-3">
                         <Image
                             src="/images/thumb-1.jpg.jpg"
                             alt="Ролик канала: 2,7 млн просмотров в TikTok"
                             width={912}
                             height={1211}
                             priority
-                            sizes="(min-width: 1024px) 22vw, 45vw"
+                            sizes="(min-width: 1024px) 12vw, 28vw"
                             className="w-full h-auto rounded-lg border border-line"
+                        />
+                        <video
+                            className="w-full aspect-[9/16] rounded-xl border border-line object-cover bg-surface"
+                            src="/guide/tm_hero_loop.mp4"
+                            poster="/guide/tm_hero_poster.webp"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            preload="metadata"
+                            aria-label="Начало ролика про гробницу Тамерлана"
                         />
                         <Image
                             src="/images/thumb-3.jpg.jpg"
@@ -57,8 +66,8 @@ export default function Hero() {
                             width={913}
                             height={1211}
                             priority
-                            sizes="(min-width: 1024px) 22vw, 45vw"
-                            className="w-full h-auto rounded-lg border border-line lg:mt-16"
+                            sizes="(min-width: 1024px) 12vw, 28vw"
+                            className="w-full h-auto rounded-lg border border-line"
                         />
                     </div>
                 </div>
