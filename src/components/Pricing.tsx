@@ -82,7 +82,7 @@ export default function Pricing() {
                         <p className="text-sm text-muted">Только первый модуль</p>
                         <h3 className="mt-2 font-display font-extrabold uppercase text-4xl leading-none">Дешёвый старт</h3>
                         <p className="mt-3 text-muted leading-relaxed">
-                            Все сервисы для ИИ-роликов в разы дешевле обычных 100 долларов в месяц: что брать, где и как оплатить из России и СНГ. Если потом возьмёшь курс, эти 990 ₽ зачту.
+                            Все сервисы для ИИ-роликов в разы дешевле обычных 100+ долларов в месяц: что брать, где и как оплатить из России и СНГ. Если потом возьмёшь курс, эти 990 ₽ зачту.
                         </p>
                     </div>
                     <p className="md:col-span-2 font-display font-extrabold text-5xl leading-none whitespace-nowrap">990 ₽</p>

@@ -19,7 +19,7 @@ export default function Hero() {
                             Создавай ИИ&#8209;анимацию <span className="text-accent">за один вечер</span>
                         </h1>
                         <p className="mt-8 text-lg md:text-xl text-muted max-w-xl leading-relaxed">
-                            Весь процесс на экране: стиль, кадры, анимация, голос и монтаж. Без лица, без команды и без подписок на 100 долларов.
+                            Весь процесс на экране: стиль, кадры, анимация, голос и монтаж. Без лица, без команды и без подписок на 100+ долларов.
                         </p>
                         <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-6 sm:items-center">
                             <Link

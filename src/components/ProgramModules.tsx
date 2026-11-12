@@ -13,7 +13,7 @@ type Visual =
 const MODULES: { title: string; desc: string; result: string; visual: Visual }[] = [
     {
         title: "Сервисы, доступ и бюджет",
-        desc: "Что нужно для ролика и зачем. Как платить за сервисы в разы меньше обычных 100 долларов в месяц, как оплатить их из России и СНГ и сколько роликов это даёт.",
+        desc: "Что нужно для ролика и зачем. Как платить за сервисы в разы меньше обычных 100+ долларов в месяц, как оплатить их из России и СНГ и сколько роликов это даёт.",
         result: "Все сервисы открыты и оплачены",
         visual: { kind: "budget" },
     },
@@ -57,7 +57,7 @@ function Tile({ visual }: { visual: Visual }) {
         <div className="relative aspect-[4/5] w-full overflow-hidden rounded-md border border-line bg-surface">
             {visual.kind === "budget" && (
                 <div className="absolute inset-0 flex flex-col justify-end p-3">
-                    <p className="font-display font-extrabold text-4xl md:text-5xl leading-[0.85] text-muted line-through decoration-accent decoration-2">$100</p>
+                    <p className="font-display font-extrabold text-4xl md:text-5xl leading-[0.85] text-muted line-through decoration-accent decoration-2">$100+</p>
                     <p className="mt-2 text-xs uppercase tracking-widest text-accent">в разы дешевле</p>
                 </div>
             )}
