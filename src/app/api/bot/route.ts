@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID;
 const CHANNEL_URL = process.env.TELEGRAM_CHANNEL_URL;
-const PDF_FILE_ID = process.env.PDF_FILE_ID;
+const GUIDE_URL = process.env.GUIDE_URL || 'https://zaprethistory.ru/guide';
 
 // Google Sheets auth
 const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
@@ -96,20 +96,6 @@ async function sendMessage(chatId: number, text: string, replyMarkup?: any) {
     });
 }
 
-// Функция для отправки PDF-документа
-async function sendDocument(chatId: number, document: string, caption: string) {
-    await fetch(`${TELEGRAM_API}/sendDocument`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            chat_id: chatId,
-            document: document,
-            caption: caption,
-            parse_mode: 'HTML',
-        }),
-    });
-}
-
 export async function POST(req: Request) {
     // Проверяем, задан ли токен
     if (!BOT_TOKEN) {
@@ -125,14 +111,8 @@ export async function POST(req: Request) {
             const chatId = body.message.chat.id;
             const text = body.message.text;
 
-            // Хелпер: если прислали документ, отвечаем его file_id (чтобы пользователь мог его узнать)
-            if (body.message.document) {
-                const fileId = body.message.document.file_id;
-                await sendMessage(chatId, `Вот ID твоего файла. Скопируй его в переменную <code>PDF_FILE_ID</code> в Vercel:\n\n<code>${fileId}</code>`);
-                return NextResponse.json({ ok: true });
-            }
-
-            if (text === '/start') {
+            // "/start" may carry a payload from a deep link (t.me/<bot>?start=...), so match the prefix
+            if (typeof text === 'string' && text.split(' ')[0] === '/start') {
                 console.log('Bot Start command received');
 
                 const from = body.message.from;
@@ -142,7 +122,7 @@ export async function POST(req: Request) {
                 // Записываем пользователя в Google Таблицу
                 await updateGoogleSheet({ chatId, username, name, status: 'Зашел' }).catch(console.error);
 
-                const welcomeText = "Привет! Гайд уже готов к отправке.\n\nЧтобы его забрать, нужно сделать один простой шаг: подпишись на мой основной канал «Запретная история».\n\nКак подпишешься, нажимай «Проверить подписку» и бот сразу пришлёт файл.";
+                const welcomeText = "Привет! Гайд уже готов к отправке.\n\nЧтобы его забрать, нужно сделать один простой шаг: подпишись на мой основной канал «Запретная история».\n\nКак подпишешься, нажимай «Проверить подписку», и бот сразу пришлёт гайд.";
                 const keyboard = {
                     inline_keyboard: [
                         [{ text: 'Подписаться на канал', url: CHANNEL_URL || 'https://t.me/' }],
@@ -174,22 +154,18 @@ export async function POST(req: Request) {
                 console.log('Is user subscribed?', isSubscribed);
 
                 if (isSubscribed) {
-                    const caption = "Файл отправлен, держи! Внутри я разобрал всю свою систему работы над роликами.\n\nЕсли после прочтения захочешь перенять мой процесс целиком и научиться делать такую же графику, анимацию и звук, вся информация по мастер-классу здесь: zaprethist.vercel.app";
+                    // The guide is a page on the site now (it used to be a PDF), so the bot sends a button to it.
+                    const guideText = "Готово, держи гайд! Внутри весь путь ролика по шагам и настоящие цифры.\n\nЕсли после прочтения захочешь делать такие же ролики сам, в конце гайда есть вся информация по курсу.";
+                    await sendMessage(chatId, guideText, {
+                        inline_keyboard: [[{ text: 'Открыть гайд', url: GUIDE_URL }]],
+                    });
 
-                    if (PDF_FILE_ID) {
-                        console.log('Sending PDF file:', PDF_FILE_ID);
-                        await sendDocument(chatId, PDF_FILE_ID, caption);
+                    const from = body.callback_query.from;
+                    const username = from.username ? `@${from.username}` : '';
+                    const name = [from.first_name, from.last_name].filter(Boolean).join(' ');
 
-                        const from = body.callback_query.from;
-                        const username = from.username ? `@${from.username}` : '';
-                        const name = [from.first_name, from.last_name].filter(Boolean).join(' ');
-
-                        // Обновляем статус пользователя в Google Таблице
-                        await updateGoogleSheet({ chatId: userId, username, name, status: 'Гайд получен' }).catch(console.error);
-                    } else {
-                        console.error('PDF_FILE_ID is not set in environment variables');
-                        await sendMessage(chatId, "Гайд успешно разблокирован! Но администратор еще не загрузил файл (не установлен PDF_FILE_ID).");
-                    }
+                    // Обновляем статус пользователя в Google Таблице
+                    await updateGoogleSheet({ chatId: userId, username, name, status: 'Гайд получен' }).catch(console.error);
                 } else {
                     console.log('User not subscribed, sending reminder');
                     const notSubText = "Бот пока не видит подписку. Сначала подпишись на канал, а затем нажми кнопку проверки еще раз.";

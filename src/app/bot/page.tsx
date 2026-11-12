@@ -102,7 +102,7 @@ export default function BotRedirectPage() {
                             <span style={{ color: '#fbbf24', fontWeight: 700, fontSize: '15px' }}>Один шаг до гайда</span>
                         </div>
                         <p style={{ color: '#94a3b8', fontSize: '13px', margin: '0 0 12px', lineHeight: 1.5 }}>
-                            TikTok не даёт открывать Telegram напрямую. Чтобы забрать файл:
+                            Отсюда Telegram напрямую не открывается. Чтобы забрать гайд:
                         </p>
 
                         {/* Steps */}
