@@ -1,5 +1,5 @@
 // Shared pieces of the Telegram bot: the Telegram calls and the Google Sheet that holds the leads.
-import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { GoogleSpreadsheet, type GoogleSpreadsheetWorksheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 
 export const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -57,6 +57,11 @@ export async function checkSubscription(userId: number) {
 }
 
 export async function openSheet() {
+    const doc = await openDoc();
+    return doc ? doc.sheetsByIndex[0] : null;
+}
+
+async function openDoc() {
     const id = process.env.GOOGLE_SHEET_ID;
     const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
     const key = process.env.GOOGLE_PRIVATE_KEY;
@@ -71,14 +76,27 @@ export async function openSheet() {
     });
     const doc = new GoogleSpreadsheet(id, jwt);
     await doc.loadInfo();
-    return doc.sheetsByIndex[0];
+    return doc;
+}
+
+// Adds a lead below the last filled row. The library's addRow appends from the header row, and from March to November
+// every lead landed in row 21 and replaced the one before (seen in the sheet's version history; most likely because
+// Google's append stops at the end of the formatted table "Table1"). Starting the append on the first empty row
+// under the real data avoids the table.
+async function appendLead(doc: GoogleSpreadsheet, sheet: GoogleSpreadsheetWorksheet, lastRow: number, values: Record<string, string>) {
+    const row = sheet.headerValues.map((h) => values[h] ?? '');
+    await doc.sheetsApi.post(`values/${sheet.encodedA1SheetName}!A${lastRow + 1}:append`, {
+        searchParams: { valueInputOption: 'RAW', insertDataOption: 'OVERWRITE' },
+        json: { values: [row] },
+    });
 }
 
 // Records what a person just did. Written in raw mode so the ISO time stays text and reads back unchanged.
 export async function recordLead(lead: { chatId: number; username: string; name: string }, event: 'start' | 'guide' | 'stop') {
     try {
-        const sheet = await openSheet();
-        if (!sheet) return;
+        const doc = await openDoc();
+        if (!doc) return;
+        const sheet = doc.sheetsByIndex[0];
         const rows = await sheet.getRows();
 
         const missing = [COL.stamp, COL.mailing].filter((h) => !sheet.headerValues.includes(h));
@@ -94,18 +112,16 @@ export async function recordLead(lead: { chatId: number; username: string; name:
         const row = rows.find((r) => String(r.get(COL.chatId)) === lead.chatId.toString());
 
         if (!row) {
-            await sheet.addRow(
-                {
-                    [COL.date]: now.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }),
-                    [COL.chatId]: lead.chatId.toString(),
-                    [COL.username]: lead.username,
-                    [COL.name]: lead.name,
-                    [COL.status]: event === 'guide' ? STATUS.gotGuide : STATUS.started,
-                    [COL.stamp]: now.toISOString(),
-                    [COL.mailing]: event === 'stop' ? MARK.stop : '',
-                },
-                { raw: true },
-            );
+            const lastRow = rows.length ? rows[rows.length - 1].rowNumber : 1;
+            await appendLead(doc, sheet, lastRow, {
+                [COL.date]: now.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }),
+                [COL.chatId]: lead.chatId.toString(),
+                [COL.username]: lead.username,
+                [COL.name]: lead.name,
+                [COL.status]: event === 'guide' ? STATUS.gotGuide : STATUS.started,
+                [COL.stamp]: now.toISOString(),
+                [COL.mailing]: event === 'stop' ? MARK.stop : '',
+            });
             return;
         }
 
