@@ -1,8 +1,8 @@
 // The Telegram webhook: Start, the subscription check that unlocks the guide, and /stop for the follow-ups.
 // The messages are in src/lib/botTexts.ts; the daily follow-up job is in ./followups/route.ts.
 import { NextResponse } from 'next/server';
-import { BOT_TOKEN, checkSubscription, recordLead, sendMessage, subscribeKeyboard, tg } from '@/lib/bot';
-import { GUIDE_SENT, GUIDE_URL, NOT_SUBSCRIBED, STOPPED, WELCOME } from '@/lib/botTexts';
+import { BOT_TOKEN, checkSubscription, recordLead, sendDocument, sendMessage, subscribeKeyboard, tg } from '@/lib/bot';
+import { GUIDE_FILE_URL, GUIDE_SENT, NOT_SUBSCRIBED, STOPPED, WELCOME } from '@/lib/botTexts';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,8 +51,12 @@ export async function POST(req: Request) {
 
             if (body.callback_query.data === 'check_sub') {
                 if (await checkSubscription(userId)) {
-                    // The guide is a page on the site now (it used to be a PDF), so the bot sends a button to it.
-                    await sendMessage(chatId, GUIDE_SENT, { inline_keyboard: [[{ text: 'Открыть гайд', url: GUIDE_URL }]] });
+                    // The guide is a PDF sent right in the chat. If Telegram can't fetch the file, send a download button instead.
+                    const sent = await sendDocument(chatId, GUIDE_FILE_URL, GUIDE_SENT);
+                    if (!sent.ok) {
+                        console.error('sendDocument failed:', sent.description);
+                        await sendMessage(chatId, GUIDE_SENT, { inline_keyboard: [[{ text: 'Скачать гайд', url: GUIDE_FILE_URL }]] });
+                    }
                     await recordLead(lead(body.callback_query.from, userId), 'guide');
                 } else {
                     await sendMessage(chatId, NOT_SUBSCRIBED, subscribeKeyboard);

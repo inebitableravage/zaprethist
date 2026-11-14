@@ -9,9 +9,9 @@ const TIERS = [
         featured: false,
         features: [
             "Шесть модулей: от сервисов и доступа до публикации",
-            "Самый дешёвый путь: сервисы в разы дешевле обычного",
+            "Самый дешёвый путь: сервисы в разы дешевле обычных 100+ долларов",
             "Оплата и доступ из России и СНГ",
-            "Мои промпты раскадровки и анимации",
+            "Мои промпты для раскадровки, кадров и анимации",
             "Шаблоны карты стиля и чек-листы",
             "Закрытый чат учеников, отвечаю сам",
             "3 месяца обновлений"
@@ -23,7 +23,7 @@ const TIERS = [
         featured: true,
         features: [
             "Всё из Базового",
-            "Смотрю твою карту стиля и кадры до анимации",
+            "Проверяю твою карту стиля и кадры до анимации",
             "Разбор трёх готовых роликов по таймкодам",
             "30 дней отвечаю тебе вне очереди"
         ]
@@ -47,7 +47,7 @@ export default function Pricing() {
                                 <h3 className="text-lg font-semibold">{tier.name}</h3>
                                 {tier.featured && (
                                     <span className="rounded border border-accent/50 px-2 py-1 text-[11px] font-semibold uppercase tracking-widest text-accent">
-                                        Рекомендуем
+                                        С моим разбором
                                     </span>
                                 )}
                             </div>
@@ -82,7 +82,7 @@ export default function Pricing() {
                         <p className="text-sm text-muted">Только первый модуль</p>
                         <h3 className="mt-2 font-display font-extrabold uppercase text-4xl leading-none">Дешёвый старт</h3>
                         <p className="mt-3 text-muted leading-relaxed">
-                            Все сервисы для ИИ-роликов в разы дешевле обычных 100+ долларов в месяц: что брать, где и как оплатить из России и СНГ. Если потом возьмёшь курс, эти 990 ₽ зачту.
+                            Как подключить все нужные сервисы в разы дешевле обычных 100+ долларов в месяц и оплатить их из России и СНГ. Если потом возьмёшь курс, эти 990 ₽ зачту в его цену.
                         </p>
                     </div>
                     <p className="md:col-span-2 font-display font-extrabold text-5xl leading-none whitespace-nowrap">990 ₽</p>
@@ -97,7 +97,7 @@ export default function Pricing() {
                 </Reveal>
 
                 <p className="mt-10 text-center text-muted">
-                    Вопросы пиши{" "}
+                    Вопросы и покупка: пиши{" "}
                     <a
                         href="https://t.me/inevitable_ravage"
                         target="_blank"

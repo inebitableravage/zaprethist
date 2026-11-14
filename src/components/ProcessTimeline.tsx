@@ -7,7 +7,7 @@ const NUMBERS = [
     { value: "1–2 ч", label: "на один ролик, от сценария до публикации" },
     { value: "< $1", label: "стоят все кадры одного ролика" },
     { value: "в разы", label: "дешевле обычных 100+ долларов в месяц на сервисы" },
-    { value: "0 ₽", label: "стоит голос рассказчика" },
+    { value: "от 12 $", label: "хватает на старт" },
 ];
 
 export default function ProcessTimeline() {

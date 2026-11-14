@@ -16,7 +16,7 @@ const FIRST_STEP_UNTIL_H = 14 * 24; // don't open a sequence with someone who go
 const BATCH = 10;                   // messages sent at once; the sheet is saved after every batch
 const TIME_BUDGET_MS = 40_000;      // whatever doesn't fit goes out on the next run
 
-type Due = { row: number; chatId: string; mark: string; text: string; keyboard: InlineKeyboard };
+type Due = { row: number; chatId: string; mark: string; text: string; keyboard?: InlineKeyboard };
 
 export async function GET(req: Request) {
     const secret = process.env.CRON_SECRET;
@@ -61,7 +61,7 @@ export async function GET(req: Request) {
                 const next = FOLLOW_UPS[done + 1];
                 if (!next || hours < next.afterHours) continue;
                 if (done === -1 && hours > FIRST_STEP_UNTIL_H) continue;
-                due.push({ row: r, chatId, mark: next.key, text: next.text, keyboard: { inline_keyboard: [[next.button]] } });
+                due.push({ row: r, chatId, mark: next.key, text: next.text, keyboard: next.button && { inline_keyboard: [[next.button]] } });
             }
         }
 

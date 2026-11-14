@@ -44,6 +44,11 @@ export function sendMessage(chatId: number | string, text: string, replyMarkup?:
     return tg('sendMessage', { chat_id: chatId, text, reply_markup: replyMarkup, parse_mode: 'HTML' });
 }
 
+// `document` is a file address (Telegram downloads it itself) or a Telegram file id.
+export function sendDocument(chatId: number | string, document: string, caption: string) {
+    return tg('sendDocument', { chat_id: chatId, document, caption, parse_mode: 'HTML' });
+}
+
 // Пользователь подписан, если его статус member, administrator или creator
 export async function checkSubscription(userId: number) {
     try {

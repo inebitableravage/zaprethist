@@ -34,7 +34,7 @@ export default function Footer() {
                                 Ещё не решил?
                             </h2>
                             <p className="mt-5 text-lg text-muted max-w-xl leading-relaxed">
-                                Открой бесплатный гайд и посмотри, как ролик проходит путь от строчки сценария до готового кадра.
+                                Открой бесплатный гайд и посмотри, как одна строчка сценария превращается в готовую сцену.
                             </p>
                         </div>
                         <div className="md:col-span-4 md:justify-self-end">
@@ -56,7 +56,7 @@ export default function Footer() {
                         <div className="md:col-span-6">
                             <p className="font-display font-extrabold uppercase text-2xl tracking-wide">Запретная История</p>
                             <p className="mt-3 text-sm text-muted max-w-sm">
-                                Курс по ИИ-анимации. От готового сценария до готового ролика за один вечер.
+                                Курс по ИИ-анимации. Весь путь ролика от сервисов до публикации.
                             </p>
                         </div>
 
