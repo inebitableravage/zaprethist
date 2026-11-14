@@ -3,9 +3,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const STATS = [
-    { value: "12М", label: "просмотров за первый месяц" },
-    { value: "55К", label: "подписчиков с нуля" },
-    { value: "9", label: "роликов" },
+    { value: "16М+", label: "просмотров за 11 роликов" },
+    { value: "65К+", label: "подписчиков с нуля" },
+    { value: "3,3М", label: "у самого большого ролика" },
 ];
 
 export default function Hero() {
@@ -41,10 +41,10 @@ export default function Hero() {
                     {/* Real work, not a wallpaper: a clip from the new channel between the two most-viewed videos */}
                     <div className="lg:col-span-5 grid grid-cols-[1fr_1.3fr_1fr] items-center gap-2.5 md:gap-3">
                         <Image
-                            src="/images/thumb-1.jpg.jpg"
-                            alt="Ролик канала: 2,7 млн просмотров в TikTok"
-                            width={912}
-                            height={1211}
+                            src="/images/old_tt_tunguska.jpg"
+                            alt="Ролик канала: 3,3 млн просмотров в TikTok"
+                            width={300}
+                            height={402}
                             priority
                             sizes="(min-width: 1024px) 12vw, 28vw"
                             className="w-full h-auto rounded-lg border border-line"
@@ -61,10 +61,10 @@ export default function Hero() {
                             aria-label="Начало ролика про гробницу Тамерлана"
                         />
                         <Image
-                            src="/images/thumb-3.jpg.jpg"
-                            alt="Ролик канала: 2,5 млн просмотров в TikTok"
-                            width={913}
-                            height={1211}
+                            src="/images/old_tt_kola.jpg"
+                            alt="Ролик канала: 2,9 млн просмотров в TikTok"
+                            width={300}
+                            height={402}
                             priority
                             sizes="(min-width: 1024px) 12vw, 28vw"
                             className="w-full h-auto rounded-lg border border-line"

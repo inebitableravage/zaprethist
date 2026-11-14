@@ -11,7 +11,7 @@ import GuideFaq from "@/components/guide/GuideFaq";
 // tools and settings stay in the course.
 
 const title = "Бесплатный гайд | Запретная История";
-const description = "Как я делаю исторические ролики с ИИ за один вечер: весь путь ролика по шагам и настоящие цифры.";
+const description = "Как я делаю анимационные ролики с ИИ за один вечер: весь путь ролика по шагам и настоящие цифры.";
 
 export const metadata: Metadata = {
     title,
@@ -20,22 +20,22 @@ export const metadata: Metadata = {
     openGraph: { title, description, url: "/guide", siteName: "Запретная История", locale: "ru_RU", type: "article" },
 };
 
-const UPDATED = "11 ноября 2026";
+const UPDATED = "14 ноября 2026";
 
 const OLD_STATS = [
-    { value: "12М", label: "просмотров за первый месяц" },
-    { value: "55К", label: "подписчиков с нуля" },
-    { value: "847К", label: "в среднем на ролик в TikTok" },
-    { value: "439К", label: "в среднем на ролик в Instagram" },
+    { value: "16М+", label: "просмотров за 11 роликов" },
+    { value: "65К+", label: "подписчиков с нуля" },
+    { value: "953К", label: "в среднем на ролик в TikTok" },
+    { value: "538К", label: "в среднем на ролик в Instagram" },
 ];
 
 const HITS = [
-    { src: "/images/thumb-1.jpg.jpg", w: 912, h: 1211, views: "2,7 млн" },
-    { src: "/images/thumb-3.jpg.jpg", w: 913, h: 1211, views: "2,5 млн" },
-    { src: "/images/thumb-4.jpg.jpg", w: 907, h: 1203, views: "1,2 млн" },
-    { src: "/images/thumb-5.jpg.jpg", w: 912, h: 1203, views: "863 тыс." },
-    { src: "/images/thumb-2.jpg.jpg", w: 908, h: 1211, views: "794,9 тыс." },
-    { src: "/images/thumb-6.jpg.jpg", w: 907, h: 1203, views: "641 тыс." },
+    { src: "/images/old_tt_tunguska.jpg", w: 300, h: 402, views: "3,3 млн" },
+    { src: "/images/old_tt_kola.jpg", w: 300, h: 402, views: "2,9 млн" },
+    { src: "/images/old_tt_noga.jpg", w: 300, h: 402, views: "1,1 млн" },
+    { src: "/images/old_tt_goiania.jpg", w: 300, h: 402, views: "1 млн" },
+    { src: "/images/old_tt_olga.jpg", w: 300, h: 402, views: "871,8 тыс." },
+    { src: "/images/old_tt_nyos.jpg", w: 300, h: 402, views: "868 тыс." },
 ];
 
 const OFFERS = [
@@ -66,7 +66,7 @@ const PATH = [
     { kind: "line", title: "Строчка сценария", sub: "С неё начинается сцена." },
     { kind: "image", src: "/guide/tm_card_anthro.webp", w: 480, h: 1280, alt: "Карта стиля: антрополог из ролика про гробницу Тамерлана", title: "Карта стиля", sub: "Герой эпизода крупно и в полный рост." },
     { kind: "image", src: "/guide/tm01.webp", w: 720, h: 1280, alt: "Кадр: антрополог в склепе держит череп", title: "Кадр", sub: "Картинка для этой сцены." },
-    { kind: "video", src: "/guide/tm01_loop.mp4", title: "Движение", sub: "Тот же кадр оживает." },
+    { kind: "video", src: "/guide/tm01_loop.mp4", title: "Анимация", sub: "Тот же кадр оживает." },
     { kind: "image", src: "/guide/tm01_final.webp", w: 540, h: 960, alt: "Готовый кадр с субтитрами", title: "Готовый кадр", sub: "С голосом, звуком и субтитрами." },
 ] as const;
 
@@ -93,7 +93,7 @@ const STEPS = [
         trap: "Деньги уходят на сотни перегенераций, а кадры всё равно не складываются в один фильм.",
     },
     {
-        title: "Движение",
+        title: "Анимация",
         what: "Каждый кадр превращается в короткий клип. Одна сцена, одно движение.",
         time: "около 15 минут",
         money: "входит в подписку",
@@ -165,7 +165,7 @@ export default function GuidePage() {
                     <div className="lg:col-span-7">
                         <p className="text-sm text-accent mb-5">Бесплатный гайд</p>
                         <h1 className="font-display font-extrabold uppercase text-[13vw] sm:text-7xl lg:text-[6.5rem] leading-[0.88] tracking-tight">
-                            Как я делаю исторические ролики с&nbsp;ИИ за&nbsp;<span className="text-accent">один вечер</span>
+                            Как я делаю анимационные ролики с&nbsp;ИИ за&nbsp;<span className="text-accent">один вечер</span>
                         </h1>
                         <p className="mt-6 text-lg md:text-xl text-muted max-w-xl leading-relaxed">
                             Без лица, без голоса и без команды. Весь путь ролика по шагам и мои настоящие цифры.
@@ -200,7 +200,7 @@ export default function GuidePage() {
                     <SectionHeader
                         num="01"
                         title="Сначала цифры"
-                        lead="Мой прошлый канал: первые два месяца с нуля. Весной я продал те аккаунты, а в октябре запустил новый, уже по обновлённой системе."
+                        lead="Мой прошлый канал: 11 роликов с нуля. Весной я продал те аккаунты, а в октябре запустил новый, уже по обновлённой системе."
                     />
 
                     <Reveal>
@@ -451,7 +451,7 @@ export default function GuidePage() {
 
                     <Reveal className="grid md:grid-cols-2 border border-line rounded-lg overflow-hidden">
                         <div className="p-8 md:p-10">
-                            <p className="text-xs uppercase tracking-widest text-muted">Пару лет назад</p>
+                            <p className="text-xs uppercase tracking-widest text-muted">Пару лет назад такая анимация</p>
                             <p className="mt-4 text-lg text-muted leading-relaxed">
                                 Команда аниматоров, дизайнеров и звукорежиссёров, неделя работы и бюджет от 100&nbsp;000&nbsp;₽.
                             </p>
@@ -465,22 +465,21 @@ export default function GuidePage() {
                     </Reveal>
 
                     <Reveal>
-                        <dl className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-px bg-line border border-line rounded-lg overflow-hidden">
+                        <p className="mt-8 text-xs uppercase tracking-widest text-muted">Сколько уходит у меня</p>
+                        <dl className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-px bg-line border border-line rounded-lg overflow-hidden">
                             {[
-                                { k: "Раньше у меня", v: "4 или 5 ч" },
-                                { k: "Сейчас", v: "1–2 ч" },
-                                { k: "Сервисы", v: "в разы дешевле" },
-                                { k: "Кадры на ролик", v: "меньше $1" },
+                                { k: "Раньше на ролик", v: "4–5 часов", sub: "" },
+                                { k: "Сейчас на ролик", v: "1–2 часа", sub: "" },
+                                { k: "Сервисы в месяц", v: "в разы дешевле", sub: "обычно 100+ долларов" },
+                                { k: "Кадры на весь ролик", v: "меньше $1", sub: "" },
                             ].map((s) => (
                                 <div key={s.k} className="bg-bg p-6">
                                     <dt className="text-xs uppercase tracking-widest text-muted">{s.k}</dt>
                                     <dd className="mt-3 font-display font-extrabold uppercase text-4xl leading-none">{s.v}</dd>
+                                    {s.sub && <dd className="mt-2 text-sm text-muted">{s.sub}</dd>}
                                 </div>
                             ))}
                         </dl>
-                        <p className="mt-6 text-muted max-w-2xl leading-relaxed">
-                            Обычно на инструменты для таких роликов уходит больше 100 долларов в месяц. У меня выходит в разы дешевле.
-                        </p>
                     </Reveal>
                 </Container>
             </section>

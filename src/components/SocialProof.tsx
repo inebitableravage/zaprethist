@@ -11,26 +11,26 @@ const PLATFORMS = [
     {
         name: "TikTok",
         icon: TIKTOK_PATH,
-        avg: "847К",
-        extra: "7,4М просмотров и 380К лайков за два месяца",
+        avg: "953К",
+        extra: "10,5М просмотров за 11 роликов",
         videos: [
-            { src: "/images/thumb-1.jpg.jpg", w: 912, h: 1211, views: "2,7 млн" },
-            { src: "/images/thumb-2.jpg.jpg", w: 908, h: 1211, views: "794,9 тыс." },
-            { src: "/images/thumb-3.jpg.jpg", w: 913, h: 1211, views: "2,5 млн" },
+            { src: "/images/old_tt_tunguska.jpg", w: 300, h: 402, views: "3,3 млн" },
+            { src: "/images/old_tt_kola.jpg", w: 300, h: 402, views: "2,9 млн" },
+            { src: "/images/old_tt_noga.jpg", w: 300, h: 402, views: "1,1 млн" },
         ],
-        shot: { src: "/images/tiktok.png", w: 1212, h: 980, alt: "Аналитика TikTok: 7,4 млн просмотров, 380 тыс. лайков", caption: "Основные метрики, 23 декабря – 20 февраля" },
+        shot: { src: "/images/old_tt_grid.jpg", w: 909, h: 1217, alt: "Ролики прошлого канала в TikTok со счётчиками просмотров", caption: "Счётчики просмотров в TikTok, ноябрь 2026" },
     },
     {
         name: "Instagram",
         icon: INSTAGRAM_PATH,
-        avg: "439К",
-        extra: "4 млн просмотров за 30 дней",
+        avg: "538К",
+        extra: "5,9М просмотров за 11 роликов",
         videos: [
-            { src: "/images/thumb-4.jpg.jpg", w: 907, h: 1203, views: "1,2 млн" },
-            { src: "/images/thumb-5.jpg.jpg", w: 912, h: 1203, views: "863 тыс." },
-            { src: "/images/thumb-6.jpg.jpg", w: 907, h: 1203, views: "641 тыс." },
+            { src: "/images/old_ig_nyos.jpg", w: 300, h: 532, views: "1,6 млн" },
+            { src: "/images/old_ig_kola.jpg", w: 300, h: 532, views: "1,2 млн" },
+            { src: "/images/old_ig_tunguska.jpg", w: 300, h: 532, views: "1,2 млн" },
         ],
-        shot: { src: "/images/instagram.png", w: 1143, h: 1064, alt: "Аналитика Instagram: 4 017 436 просмотров за 30 дней", caption: "Просмотры за 30 дней, 23 января – 21 февраля" },
+        shot: { src: "/images/old_ig_grid.jpg", w: 909, h: 1075, alt: "Ролики прошлого канала в Instagram со счётчиками просмотров", caption: "Счётчики просмотров в Instagram, ноябрь 2026" },
     },
 ];
 
@@ -41,7 +41,7 @@ export default function SocialProof() {
                 <SectionHeader
                     num="01"
                     title="Кто учит"
-                    lead="Первые 9 роликов моего канала, январь–февраль 2026. Цифры из аналитики TikTok и Instagram."
+                    lead="11 роликов моего прошлого канала. Цифры со счётчиков просмотров в TikTok и Instagram."
                 />
 
                 <div className="grid lg:grid-cols-2 gap-px bg-line border border-line rounded-lg overflow-hidden">
@@ -71,17 +71,16 @@ export default function SocialProof() {
                                 ))}
                             </ul>
 
-                            {/* Both screenshots are cropped to one frame, so the columns line up */}
+                            {/* A piece of each account's grid with the view counters on the covers */}
                             <figure className="mt-8">
-                                <div className="relative aspect-[1212/1064] overflow-hidden rounded-md border border-line">
-                                    <Image
-                                        src={p.shot.src}
-                                        alt={p.shot.alt}
-                                        fill
-                                        sizes="(min-width: 1024px) 45vw, 90vw"
-                                        className="object-cover"
-                                    />
-                                </div>
+                                <Image
+                                    src={p.shot.src}
+                                    alt={p.shot.alt}
+                                    width={p.shot.w}
+                                    height={p.shot.h}
+                                    sizes="(min-width: 1024px) 45vw, 90vw"
+                                    className="w-full h-auto rounded-md border border-line"
+                                />
                                 <figcaption className="mt-3 text-sm text-muted">{p.shot.caption}</figcaption>
                             </figure>
                         </Reveal>
