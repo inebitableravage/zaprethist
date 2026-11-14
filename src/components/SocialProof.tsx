@@ -41,7 +41,7 @@ export default function SocialProof() {
                 <SectionHeader
                     num="01"
                     title="Кто учит"
-                    lead="Первые 9 роликов моего канала, январь–февраль 2026. Цифры из аналитики TikTok и Instagram. Это результат канала, а не обещание курса: курс учит делать сами ролики."
+                    lead="Первые 9 роликов моего канала, январь–февраль 2026. Цифры из аналитики TikTok и Instagram."
                 />
 
                 <div className="grid lg:grid-cols-2 gap-px bg-line border border-line rounded-lg overflow-hidden">
