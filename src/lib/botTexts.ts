@@ -9,7 +9,7 @@ export const CONTACT_URL = 'https://t.me/inevitable_ravage';
 export const CHANNEL_LINK = process.env.TELEGRAM_CHANNEL_URL || 'https://t.me/zaprethist';
 
 // Checkout links on Lava.top. Leave empty until the products are published; the buttons fall back to CONTACT_URL.
-export const LAVA_URL_START = process.env.LAVA_URL_START || '';
+export const LAVA_URL_START = process.env.LAVA_URL_START || 'https://app.lava.top/products/74a54830-d5a5-40ed-a3b2-8e53f975dc29';
 export const LAVA_URL_BASIC = process.env.LAVA_URL_BASIC || '';
 export const LAVA_URL_PERSONAL = process.env.LAVA_URL_PERSONAL || '';
 
