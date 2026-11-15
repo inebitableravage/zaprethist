@@ -61,7 +61,13 @@ export async function GET(req: Request) {
                 const next = FOLLOW_UPS[done + 1];
                 if (!next || hours < next.afterHours) continue;
                 if (done === -1 && hours > FIRST_STEP_UNTIL_H) continue;
-                due.push({ row: r, chatId, mark: next.key, text: next.text, keyboard: next.button && { inline_keyboard: [[next.button]] } });
+                due.push({
+                    row: r,
+                    chatId,
+                    mark: next.key,
+                    text: next.text,
+                    keyboard: next.buttons && { inline_keyboard: next.buttons },
+                });
             }
         }
 

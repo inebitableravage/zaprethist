@@ -44,9 +44,25 @@ export function sendMessage(chatId: number | string, text: string, replyMarkup?:
     return tg('sendMessage', { chat_id: chatId, text, reply_markup: replyMarkup, parse_mode: 'HTML' });
 }
 
+// Edits an existing bot text message in place for menu navigation; ignores "message is not modified".
+export async function editMessageText(chatId: number | string, messageId: number, text: string, replyMarkup?: InlineKeyboard) {
+    const res = await tg('editMessageText', {
+        chat_id: chatId,
+        message_id: messageId,
+        text,
+        reply_markup: replyMarkup,
+        parse_mode: 'HTML',
+        disable_web_page_preview: true,
+    });
+    if (!res.ok && /message is not modified/i.test(res.description || '')) {
+        return { ok: true };
+    }
+    return res;
+}
+
 // `document` is a file address (Telegram downloads it itself) or a Telegram file id.
-export function sendDocument(chatId: number | string, document: string, caption: string) {
-    return tg('sendDocument', { chat_id: chatId, document, caption, parse_mode: 'HTML' });
+export function sendDocument(chatId: number | string, document: string, caption: string, replyMarkup?: InlineKeyboard) {
+    return tg('sendDocument', { chat_id: chatId, document, caption, reply_markup: replyMarkup, parse_mode: 'HTML' });
 }
 
 // Пользователь подписан, если его статус member, administrator или creator
