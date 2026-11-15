@@ -165,7 +165,7 @@ function tierScreen(key: TierKey): Screen {
     const actionRows: InlineKeyboard['inline_keyboard'] = tier.payUrl
         ? [
               [{ text: `💳 Оплатить · ${tier.price}`, url: tier.payUrl }],
-              [{ text: '💬 Вопрос / оплата из СНГ или USDT', url: CONTACT_URL }],
+              [{ text: '💬 Вопрос или оплата в USDT', url: CONTACT_URL }],
           ]
         : [[{ text: `💬 Получить доступ или задать вопрос · ${tier.price}`, url: CONTACT_URL }]];
 
