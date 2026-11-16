@@ -24,18 +24,20 @@ export async function POST(req: Request) {
             // "/start" may carry a payload from a deep link (t.me/<bot>?start=...), so match the first word
             const [command, payload] = body.message.text.trim().split(/\s+/);
 
+            // The reply goes out first: writing the lead to the sheet takes a couple of seconds, and a bot that
+            // stays silent that long after Start looks broken.
             if (command === '/start') {
-                await recordLead(toLead(body.message.from, chatId), 'start');
                 if (payload === 'course') {
                     await sendStoreHome(chatId);
                 } else {
                     await sendMessage(chatId, WELCOME, subscribeKeyboard);
                 }
+                await recordLead(toLead(body.message.from, chatId), 'start');
             } else if (command === '/menu') {
                 await sendStoreHome(chatId);
             } else if (command === '/stop') {
-                await recordLead(toLead(body.message.from, chatId), 'stop');
                 await sendMessage(chatId, STOPPED);
+                await recordLead(toLead(body.message.from, chatId), 'stop');
             } else if (body.message.chat.type === 'private' && body.message.from) {
                 // Anything else typed to the bot: a question, "хочу курс", an unknown command.
                 await handleTypedMessage(body.message);
