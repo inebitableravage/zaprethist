@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     openGraph: { title, description, url: "/guide", siteName: "Запретная История", locale: "ru_RU", type: "article" },
 };
 
-const UPDATED = "14 ноября 2026";
+const UPDATED = "16 ноября 2026";
 
 const OLD_STATS = [
     { value: "16М+", label: "просмотров за 11 роликов" },

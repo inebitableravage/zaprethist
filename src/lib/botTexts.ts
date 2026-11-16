@@ -6,6 +6,12 @@ import type { InlineKeyboard } from './bot';
 // Telegram's servers download the file from this address once and then reuse their own copy.
 export const GUIDE_FILE_URL = process.env.GUIDE_FILE_URL || 'https://www.zaprethistory.ru/guide/Zapretnaya_Istoriya_gaid.pdf';
 export const CONTACT_URL = 'https://t.me/inevitable_ravage';
+
+// Opens the chat with the author with the first message already typed, so the person only has to press Send.
+export function contactUrl(draft: string) {
+    return `${CONTACT_URL}?text=${encodeURIComponent(draft)}`;
+}
+export const DRAFT_QUESTION = 'Привет! У меня вопрос по курсу «ИИ-режиссёр».';
 export const CHANNEL_LINK = process.env.TELEGRAM_CHANNEL_URL || 'https://t.me/zaprethist';
 
 // Checkout links on Lava.top. Leave empty until the products are published; the buttons fall back to CONTACT_URL.
@@ -31,7 +37,13 @@ const STOP_LINE = '\n\nЕсли не хочешь получать сообще�
 // Sent once to someone who pressed Start but never passed the subscription check.
 export const REMINDER =
     'Гайд всё ещё ждёт тебя здесь.\n\n' +
-    'Подпишись на канал и нажми «Проверить подписку», чтобы забрать файл.';
+    'Подпишись на канал и нажми «Проверить подписку», чтобы забрать файл.\n\n' +
+    'Программа курса «ИИ-режиссёр» и тарифы открыты уже сейчас, кнопка ниже.';
+
+// The answer to anything typed into the bot that isn't a command. The message itself is forwarded to the owner.
+export const TYPED_REPLY =
+    'На вопросы отвечаю в личке: @inevitable_ravage. Нажми кнопку ниже, твоё сообщение уже будет в поле ввода.\n\n' +
+    'Программа курса, тарифы и бесплатный гайд тоже ниже.';
 
 export type FollowUp = { key: string; afterHours: number; text: string; buttons?: InlineKeyboard['inline_keyboard'] };
 
@@ -58,7 +70,7 @@ export const FOLLOW_UPS: FollowUp[] = [
             STOP_LINE,
         buttons: [
             [{ text: '⚡ Подробнее: Дешёвый старт (990 ₽)', callback_data: 'store:tier_new:start' }],
-            [{ text: '💬 Написать мне', url: CONTACT_URL }],
+            [{ text: '💬 Написать мне', url: contactUrl(DRAFT_QUESTION) }],
         ],
     },
     {
@@ -71,7 +83,7 @@ export const FOLLOW_UPS: FollowUp[] = [
             'Вопросы и оплата: @inevitable_ravage',
         buttons: [
             [{ text: '💳 Открыть программу и тарифы', callback_data: 'store:open_new' }],
-            [{ text: '💬 Написать мне', url: CONTACT_URL }],
+            [{ text: '💬 Написать мне', url: contactUrl(DRAFT_QUESTION) }],
         ],
     },
 ];
@@ -137,8 +149,7 @@ export const STORE_RESULTS_TEXT =
     '• Больше <b>16 млн</b> просмотров за 11 роликов\n' +
     '• <b>65 000+</b> подписчиков с нуля\n' +
     '• <b>TikTok:</b> 10,5 млн просмотров (в среднем 953 тыс. на ролик; хиты: 3,3 млн, 2,9 млн, 1,1 млн)\n' +
-    '• <b>Instagram:</b> 5,9 млн просмотров (в среднем 538 тыс. на ролик; хиты: 1,6 млн, 1,2 млн, 1,2 млн)\n\n' +
-    'В октябре я запустил новый канал с нуля и показываю разборы и свежие цифры открыто в Telegram.';
+    '• <b>Instagram:</b> 5,9 млн просмотров (в среднем 538 тыс. на ролик; хиты: 1,6 млн, 1,2 млн, 1,2 млн)';
 
 export const STORE_COST_TEXT =
     '<b>Сколько стоят нейросети для таких роликов</b>\n\n' +
@@ -158,11 +169,13 @@ export const STORE_PRICING_INTRO =
 
 export type TierKey = 'start' | 'basic' | 'personal';
 
-export const STORE_TIERS: Record<TierKey, { name: string; price: string; text: string; payUrl: string }> = {
+// `draft` is the message already typed for the person when a tier's button opens the chat with the author.
+export const STORE_TIERS: Record<TierKey, { name: string; price: string; text: string; payUrl: string; draft: string }> = {
     start: {
         name: 'Дешёвый старт',
         price: '990 ₽',
         payUrl: LAVA_URL_START,
+        draft: 'Привет! Я по поводу «Дешёвого старта» за 990 ₽.',
         text:
             '<b>Дешёвый старт · 990 ₽</b>\n' +
             '<i>Только первый модуль</i>\n\n' +
@@ -173,6 +186,7 @@ export const STORE_TIERS: Record<TierKey, { name: string; price: string; text: s
         name: 'Базовый',
         price: '3 990 ₽',
         payUrl: LAVA_URL_BASIC,
+        draft: 'Привет! Хочу курс «ИИ-режиссёр», тариф Базовый за 3 990 ₽.',
         text:
             '<b>Курс «ИИ-режиссёр» · Базовый · 3 990 ₽</b>\n' +
             '<i>Сделать самому</i>\n\n' +
@@ -188,6 +202,7 @@ export const STORE_TIERS: Record<TierKey, { name: string; price: string; text: s
         name: 'Личный',
         price: '6 990 ₽',
         payUrl: LAVA_URL_PERSONAL,
+        draft: 'Привет! Хочу курс «ИИ-режиссёр», тариф Личный за 6 990 ₽.',
         text:
             '<b>Курс «ИИ-режиссёр» · Личный · 6 990 ₽</b>\n' +
             '<i>Сделать со мной</i>\n\n' +

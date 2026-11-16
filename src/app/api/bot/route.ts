@@ -1,8 +1,9 @@
-// The Telegram webhook: Start, the subscription check that unlocks the guide, interactive store menus, and /stop.
+// The Telegram webhook: Start, the subscription check that unlocks the guide, interactive store menus, /stop,
+// and a reply to anything typed (forwarded to the owner).
 // The messages are in src/lib/botTexts.ts; the storefront screens are in src/lib/botStore.ts.
 import { NextResponse } from 'next/server';
 import { BOT_TOKEN, checkSubscription, recordLead, sendMessage, subscribeKeyboard, tg } from '@/lib/bot';
-import { deliverGuide, handleStoreCallback, sendStoreHome, toLead } from '@/lib/botStore';
+import { deliverGuide, handleStoreCallback, handleTypedMessage, sendStoreHome, toLead } from '@/lib/botStore';
 import { NOT_SUBSCRIBED, STOPPED, WELCOME } from '@/lib/botTexts';
 
 export const dynamic = 'force-dynamic';
@@ -35,7 +36,13 @@ export async function POST(req: Request) {
             } else if (command === '/stop') {
                 await recordLead(toLead(body.message.from, chatId), 'stop');
                 await sendMessage(chatId, STOPPED);
+            } else if (body.message.chat.type === 'private' && body.message.from) {
+                // Anything else typed to the bot: a question, "хочу курс", an unknown command.
+                await handleTypedMessage(body.message);
             }
+        } else if (body.message && body.message.chat?.type === 'private' && body.message.from) {
+            // A photo, a voice message, a sticker: same answer, and the owner sees what was sent.
+            await handleTypedMessage(body.message);
         }
 
         // 2. Обработка нажатий на инлайн-кнопки (callback_query)

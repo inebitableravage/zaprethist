@@ -5,10 +5,13 @@ import { JWT } from 'google-auth-library';
 export const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 export const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID;
 export const CHANNEL_URL = process.env.TELEGRAM_CHANNEL_URL;
+// The owner's own chat with this bot. Alerts about interested people and forwarded messages go there.
+// Without it the bot works as before and simply sends no alerts.
+export const OWNER_CHAT_ID = process.env.OWNER_CHAT_ID;
 
 const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 
-// Sheet columns. The first five existed before the follow-ups; the last two are added automatically.
+// Sheet columns. The first five existed before the follow-ups; the rest are added automatically.
 export const COL = {
     date: 'Дата',
     chatId: 'Chat ID',
@@ -17,6 +20,7 @@ export const COL = {
     status: 'Status',
     stamp: 'Отметка времени', // ISO time of the first Start, then of the moment the guide was sent
     mailing: 'Рассылка',      // the last automatic message sent, or a stop mark (see MARK)
+    interest: 'Интерес',      // what the person opened in the store: "тарифы", then the tier names
 } as const;
 
 export const STATUS = { started: 'Зашел', gotGuide: 'Гайд получен' } as const;
@@ -28,8 +32,33 @@ export const subscribeKeyboard: InlineKeyboard = {
     inline_keyboard: [
         [{ text: 'Подписаться на канал', url: CHANNEL_URL || 'https://t.me/' }],
         [{ text: 'Проверить подписку', callback_data: 'check_sub' }],
+        // The course is one tap away for people who never pass the check.
+        [{ text: '📚 Курс и тарифы', callback_data: 'store:open_new' }],
     ],
 };
+
+const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+// "Name (@username)" with a tap-through to the person's profile, for messages to the owner.
+export function leadLabel(lead: { chatId: number; username: string; name: string }) {
+    const name = `<a href="tg://user?id=${lead.chatId}">${escapeHtml(lead.name || 'Без имени')}</a>`;
+    return lead.username ? `${name} (${lead.username})` : name;
+}
+
+export function isOwner(chatId: number | string) {
+    return Boolean(OWNER_CHAT_ID) && String(chatId) === String(OWNER_CHAT_ID);
+}
+
+// Tells the owner something worth acting on. Never throws: an alert must not break the reply to the person.
+export async function notifyOwner(text: string) {
+    if (!OWNER_CHAT_ID) return;
+    try {
+        const res = await sendMessage(OWNER_CHAT_ID, text);
+        if (!res.ok) console.error('Owner alert failed:', res.description);
+    } catch (error) {
+        console.error('Owner alert failed:', error);
+    }
+}
 
 export async function tg(method: string, payload: Record<string, unknown>) {
     const res = await fetch(`${TELEGRAM_API}/${method}`, {
@@ -113,14 +142,20 @@ async function appendLead(doc: GoogleSpreadsheet, sheet: GoogleSpreadsheetWorksh
 }
 
 // Records what a person just did. Written in raw mode so the ISO time stays text and reads back unchanged.
-export async function recordLead(lead: { chatId: number; username: string; name: string }, event: 'start' | 'guide' | 'stop') {
+// A 'view' is a store screen worth knowing about (`interest` names it); it never changes the status.
+// Returns true when that interest is new for this person, so the owner is told once, not on every tap.
+export async function recordLead(
+    lead: { chatId: number; username: string; name: string },
+    event: 'start' | 'guide' | 'stop' | 'view',
+    interest?: string,
+): Promise<boolean> {
     try {
         const doc = await openDoc();
-        if (!doc) return;
+        if (!doc) return false;
         const sheet = doc.sheetsByIndex[0];
         const rows = await sheet.getRows();
 
-        const missing = [COL.stamp, COL.mailing].filter((h) => !sheet.headerValues.includes(h));
+        const missing = [COL.stamp, COL.mailing, COL.interest].filter((h) => !sheet.headerValues.includes(h));
         if (missing.length) {
             const headers = [...sheet.headerValues, ...missing];
             if (headers.length > sheet.columnCount) {
@@ -142,9 +177,13 @@ export async function recordLead(lead: { chatId: number; username: string; name:
                 [COL.status]: event === 'guide' ? STATUS.gotGuide : STATUS.started,
                 [COL.stamp]: now.toISOString(),
                 [COL.mailing]: event === 'stop' ? MARK.stop : '',
+                [COL.interest]: interest ?? '',
             });
-            return;
+            return Boolean(interest);
         }
+
+        const seen = String(row.get(COL.interest) ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+        const newInterest = Boolean(interest) && !seen.includes(interest as string);
 
         const status = row.get(COL.status);
         const stopped = row.get(COL.mailing) === MARK.stop;
@@ -153,7 +192,11 @@ export async function recordLead(lead: { chatId: number; username: string; name:
             [COL.name]: lead.name || row.get(COL.name) || '',
         };
 
-        if (event === 'stop') {
+        if (newInterest) update[COL.interest] = [...seen, interest].join(', ');
+
+        if (event === 'view') {
+            if (!newInterest) return false; // nothing new to write: skip the save
+        } else if (event === 'stop') {
             update[COL.mailing] = MARK.stop;
         } else if (event === 'guide') {
             // The follow-ups count from the first time the guide is sent; pressing the button again changes nothing.
@@ -171,7 +214,9 @@ export async function recordLead(lead: { chatId: number; username: string; name:
 
         row.assign(update);
         await row.save({ raw: true });
+        return newInterest;
     } catch (error) {
         console.error('Error updating Google Sheets:', error);
+        return false;
     }
 }

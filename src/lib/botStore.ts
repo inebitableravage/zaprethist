@@ -1,17 +1,22 @@
 // Interactive storefront screens for @zaprethistory_bot.
 // Renders clean in-place menus via editMessageText (with sendMessage fallback for media/old messages).
 import {
+    OWNER_CHAT_ID,
     checkSubscription,
     editMessageText,
+    isOwner,
+    leadLabel,
+    notifyOwner,
     recordLead,
     sendDocument,
     sendMessage,
     subscribeKeyboard,
+    tg,
     type InlineKeyboard,
 } from './bot';
 import {
     CHANNEL_LINK,
-    CONTACT_URL,
+    DRAFT_QUESTION,
     GUIDE_FILE_URL,
     GUIDE_SENT,
     STORE_COST_TEXT,
@@ -22,7 +27,9 @@ import {
     STORE_PROGRAM_INTRO,
     STORE_RESULTS_TEXT,
     STORE_TIERS,
+    TYPED_REPLY,
     WELCOME,
+    contactUrl,
     type TierKey,
 } from './botTexts';
 
@@ -72,10 +79,36 @@ function mainScreen(): Screen {
                     { text: '❓ Частые вопросы', callback_data: 'store:faq' },
                     { text: '📄 Бесплатный гайд', callback_data: 'store:guide' },
                 ],
-                [{ text: '💬 Написать автору', url: CONTACT_URL }],
+                [{ text: '💬 Написать автору', url: contactUrl(DRAFT_QUESTION) }],
             ],
         },
     };
+}
+
+// Someone typed into the bot instead of pressing a button. They get the way to reach the author, with their own
+// words already in the message field, and the owner gets the message forwarded.
+export async function handleTypedMessage(message: { message_id: number; text?: string; chat: { id: number }; from: TgUser }) {
+    const chatId = message.chat.id;
+    const draft = (message.text || '').trim().slice(0, 200) || DRAFT_QUESTION; // short enough for a button link
+    await sendMessage(chatId, TYPED_REPLY, {
+        inline_keyboard: [
+            [{ text: '💬 Написать мне', url: contactUrl(draft) }],
+            [{ text: '📚 Курс и тарифы', callback_data: 'store:open_new' }],
+            [{ text: '📄 Бесплатный гайд', callback_data: 'store:guide' }],
+        ],
+    });
+    if (isOwner(chatId)) return;
+    await notifyOwner(`💬 ${leadLabel(toLead(message.from, chatId))} пишет боту:`);
+    if (OWNER_CHAT_ID) {
+        await tg('forwardMessage', { chat_id: OWNER_CHAT_ID, from_chat_id: chatId, message_id: message.message_id });
+    }
+}
+
+// Writes the interest to the sheet and tells the owner the first time this person shows it.
+async function noteInterest(from: TgUser, chatId: number | string, interest: string, alert: string) {
+    const lead = toLead(from, from.id);
+    const isNew = await recordLead(lead, 'view', interest);
+    if (isNew && !isOwner(chatId)) await notifyOwner(`🔥 ${leadLabel(lead)} ${alert}`);
 }
 
 function programScreen(): Screen {
@@ -122,10 +155,10 @@ function resultsScreen(): Screen {
         text: STORE_RESULTS_TEXT,
         keyboard: {
             inline_keyboard: [
-                [{ text: '📢 Канал «Запретная История»', url: CHANNEL_LINK }],
                 [{ text: '📚 Что внутри курса', callback_data: 'store:program' }],
+                [{ text: '💳 Тарифы', callback_data: 'store:pricing' }],
                 [
-                    { text: '💳 Тарифы', callback_data: 'store:pricing' },
+                    { text: '📢 Канал', url: CHANNEL_LINK },
                     { text: '← Меню', callback_data: 'store:main' },
                 ],
             ],
@@ -165,9 +198,9 @@ function tierScreen(key: TierKey): Screen {
     const actionRows: InlineKeyboard['inline_keyboard'] = tier.payUrl
         ? [
               [{ text: `💳 Оплатить · ${tier.price}`, url: tier.payUrl }],
-              [{ text: '💬 Вопрос или оплата в USDT', url: CONTACT_URL }],
+              [{ text: '💬 Вопрос или оплата в USDT', url: contactUrl(tier.draft) }],
           ]
-        : [[{ text: `💬 Получить доступ или задать вопрос · ${tier.price}`, url: CONTACT_URL }]];
+        : [[{ text: `💬 Получить доступ или задать вопрос · ${tier.price}`, url: contactUrl(tier.draft) }]];
 
     return {
         text: tier.text,
@@ -262,8 +295,10 @@ export async function handleStoreCallback(
         await renderScreen(chatId, messageId, costScreen(), false);
         return;
     }
+    // The screen goes out first so the menu stays quick; the sheet and the alert to the owner come after.
     if (data === 'store:pricing') {
         await renderScreen(chatId, messageId, pricingScreen(), false);
+        await noteInterest(from, chatId, 'тарифы', 'смотрит тарифы');
         return;
     }
     if (data.startsWith('store:tier:') || data.startsWith('store:tier_new:')) {
@@ -271,6 +306,8 @@ export async function handleStoreCallback(
         const rawKey = data.slice(forceNew ? 'store:tier_new:'.length : 'store:tier:'.length);
         const key: TierKey = rawKey === 'start' || rawKey === 'basic' || rawKey === 'personal' ? rawKey : 'basic';
         await renderScreen(chatId, messageId, tierScreen(key), forceNew);
+        const tier = STORE_TIERS[key];
+        await noteInterest(from, chatId, tier.name, `смотрит тариф «${tier.name}» · ${tier.price}`);
         return;
     }
     if (data === 'store:faq') {
